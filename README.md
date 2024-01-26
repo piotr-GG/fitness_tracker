@@ -1,5 +1,5 @@
 <h2>Project description</h2>
-The purpose of this project is to create a fitness app that would have the following functionalities.
+The purpose of this project is to create a fitness app that would have the following functionalities:
 - **Body weight tracker** - provides functionality to plot the user's body weight in given period of time
 - **Exercises database** - used as a database for different exercises with groupings by muscles exercises, exercise destination (burn fat, build muscle etc.)
 - **Training planner** - allows to create a customized training plan from predefined templates
