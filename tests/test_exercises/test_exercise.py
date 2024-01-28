@@ -1,6 +1,6 @@
 import pytest
 
-from exercises.exercise import Exercise
+from models.exercises.exercise import Exercise
 
 
 def test_is_abstract():

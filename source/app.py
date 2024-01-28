@@ -5,20 +5,22 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
+# db.init_app(app)
 
 
-class BodyWeightRecord(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime, default=datetime.utcnow)
-    weight = db.Column(db.Float)
-
-    def __repr__(self):
-        return f'<BW Record {self.id}>'
+# class BodyWeightRecord(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     date = db.Column(db.DateTime, default=datetime.utcnow)
+#     weight = db.Column(db.Float)
+#
+#     def __repr__(self):
+#         return f'<BW Record {self.id}>'
 
 
 @app.route('/')
 def index():
-    bw_records = BodyWeightRecord.query.order_by(BodyWeightRecord.date).all()
+    from models.bodyweight_tracker.body_weight_record import BodyWeightRecord
+    bw_records = BodyWeightRecord.query.all()
     return render_template('index.html', records=bw_records)
 
 
