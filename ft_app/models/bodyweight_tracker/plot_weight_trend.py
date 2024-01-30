@@ -1,8 +1,6 @@
-import numpy as np
 import pandas as pd
 
-from bokeh.plotting import figure, show
-from definitions import INPUT_PATH
+from ft_app.definitions import INPUT_PATH
 
 input_file_path = INPUT_PATH.joinpath("weight_input.csv")
 print(input_file_path)
