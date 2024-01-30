@@ -21,11 +21,7 @@ if __name__ == "__main__":
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
     db = SQLAlchemy(app)
 
-    @app.route('/')
-    def index():
-        from models.bodyweight_tracker.body_weight_record import BodyWeightRecord
-        bw_records = BodyWeightRecord.query.all()
-        return render_template('index.html', records=bw_records)
+
 
     app.run(debug=True)
     db.init_app(app)

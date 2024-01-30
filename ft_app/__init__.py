@@ -1,6 +1,8 @@
 import os
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
+
+from ft_app.models.models import User, BodyWeightRecord
 
 
 def create_app(test_config=None):
@@ -19,13 +21,24 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route('/hello')
-    def hello():
-        return "Pozdrawiam Was, poczekacie!"
-
     from .models.dbc.database import init_db
     init_db()
+    populate_dbc()
 
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-    # db = SQLAlchemy(app)
+    from . import bw_tracker
+    app.register_blueprint(bw_tracker.bp)
+    app.add_url_rule('/', endpoint='index')
     return app
+
+
+def populate_dbc():
+    from ft_app.models.dbc.database import db_session
+    if not User.query.all():
+        db_session.add(User(name="Adrian", email="<ceo@zf.com>"))
+        db_session.add(User(name="Adrian", email="<ceo@zf.com>"))
+
+        db_session.add(BodyWeightRecord(weight=90.5))
+        db_session.add(BodyWeightRecord(weight=91.2))
+        db_session.add(BodyWeightRecord(weight=92.5))
+        db_session.add(BodyWeightRecord(weight=95.5))
+        db_session.commit()
