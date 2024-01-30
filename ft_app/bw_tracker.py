@@ -9,5 +9,14 @@ bp = Blueprint("bw_tracker", __name__)
 
 @bp.route('/')
 def index():
+    if request.method == "POST":
+        print("SKURWYSYNY!")
+        print("SKURWYSYNY!")
+        print("SKURWYSYNY!")
+        print("SKURWYSYNY!")
+        print("SKURWYSYNY!")
+        print("SKURWYSYNY!")
+        return b"POSTING!"
+
     bw_records = BodyWeightRecord.query.all()
     return render_template('index.html', records=bw_records)
