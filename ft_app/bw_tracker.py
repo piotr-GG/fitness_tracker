@@ -7,16 +7,10 @@ from ft_app.models.models import BodyWeightRecord
 bp = Blueprint("bw_tracker", __name__)
 
 
-@bp.route('/')
+@bp.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == "POST":
-        print("SKURWYSYNY!")
-        print("SKURWYSYNY!")
-        print("SKURWYSYNY!")
-        print("SKURWYSYNY!")
-        print("SKURWYSYNY!")
-        print("SKURWYSYNY!")
-        return b"POSTING!"
-
-    bw_records = BodyWeightRecord.query.all()
-    return render_template('index.html', records=bw_records)
+        return "POSTING!"
+    else:
+        bw_records = BodyWeightRecord.query.all()
+        return render_template('index.html', records=bw_records)
