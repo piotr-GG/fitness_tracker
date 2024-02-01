@@ -21,12 +21,17 @@ class User(Base):
 class BodyWeightRecord(Base):
     __tablename__ = "bw_records"
     id = Column(Integer, primary_key=True)
-    date = Column(DateTime, default=datetime.utcnow)
+    date = Column(DateTime, default=datetime.utcnow, unique=True)
     weight = Column(Float)
 
     def __init__(self, weight=None, date=None):
         self.weight = weight
-        self.date = date
+        self.date = datetime.strptime(date, "%Y-%m-%d").date()
 
     def __repr__(self):
         return f'<BW Record {self.id!r},{self.date!r},{self.weight!r}>'
+
+    @classmethod
+    def validate_bw_record(cls, bw_record):
+        return True
+
