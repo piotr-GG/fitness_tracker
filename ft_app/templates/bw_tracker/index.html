@@ -1,0 +1,43 @@
+{%extends 'base.html' %}
+
+{% block head %}
+<title>TEST</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+   {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+   {% endfor %}
+   <h1>Body weight tracker</h1>
+   {% if records|length < 1 %}
+      <h4>There are no body weight records so far. Please add some records first.</h4>
+   {% else %}
+      <table>
+         <tr>
+            <th>Date</th>
+            <th>Weight [kg]</th>
+            <th>Action</th>
+         </tr>
+         {% for record in records %}
+            <tr>
+               <td>{{ record.date.date() }}</td>
+               <td>{{ record.weight }}</td>
+               <td>
+                  <a href="/delete/{{record.id}}">Delete</a>
+                  <br>
+                  <a href="/update//{record.id}}">Update</a>
+               </td>
+            </tr>
+         {% endfor %}
+      </table>
+   {% endif %}
+   <div class="form">
+      <form method="POST">
+         <input type="date" name="date" id="date">
+         <input type="text" name="weight" id="weight">
+         <input type="submit" value="Add record">
+      </form>
+   </div>
+</div>
+{% endblock %}

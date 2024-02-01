@@ -1,40 +1,15 @@
 {%extends 'base.html' %}
 
 {% block head %}
-<title>TEST</title>
+<title>Fitness Tracker App</title>
 {% endblock %}
 
 {% block body %}
 <div class="content">
-   <h1>Body weight tracker</h1>
-   {% if records|length < 1 %}
-      <h4>There are no body weight records so far. Please add some records first.</h4>
-   {% else %}
-      <table>
-         <tr>
-            <th>Date</th>
-            <th>Weight [kg]</th>
-            <th>Action</th>
-         </tr>
-         {% for record in records %}
-            <tr>
-               <td>{{ record.date.date() }}</td>
-               <td>{{ record.weight }}</td>
-               <td>
-                  <a href="/delete/{{record.id}}">Delete</a>
-                  <br>
-                  <a href="/update//{record.id}}">Update</a>
-               </td>
-            </tr>
-         {% endfor %}
-      </table>
-   {% endif %}
-   <div class="form">
-      <form action = "/" method="POST">
-         <input type="date" name="date" id="date">
-         <input type="text" name="weight" id="weight">
-         <input type="submit" value="Add record">
-      </form>
-   </div>
+   <h1>Fitness Tracker App</h1>
+   <a href="bw_tracker/">Body weight tracker</a><br>
+   <a href="exercises/">Exercises</a><br>
+   <a href="training_planner/">Training planner</a><br>
+   <a href="personal_trainers/">Personal trainers</a><br>
 </div>
 {% endblock %}

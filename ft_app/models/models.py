@@ -35,3 +35,22 @@ class BodyWeightRecord(Base):
     def validate_bw_record(cls, bw_record):
         return True
 
+    @staticmethod
+    def create_bw_record(date, weight):
+        try:
+            date = datetime.strptime(date, "%Y-%m-%d").date()
+        except ValueError:
+            raise Exception("Wrong value for date provided!")
+
+        if date > datetime.utcnow().date():
+            raise Exception("Date provided cannot be set in future!")
+
+        try:
+            weight = float(weight)
+        except ValueError:
+            raise Exception("Please provide valid value for body weight!")
+
+        if not (0 <= weight <= 200):
+            raise Exception("Body weight value shall be between 0 and 200 kgs!")
+
+        return BodyWeightRecord(weight=weight, date=date)

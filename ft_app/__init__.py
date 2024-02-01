@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 from ft_app.models.models import User, BodyWeightRecord
@@ -25,9 +25,23 @@ def create_app(test_config=None):
     init_db()
     populate_dbc()
 
+    @app.route('/')
+    def index():
+        return render_template("index.html")
+
     from . import bw_tracker
     app.register_blueprint(bw_tracker.bp)
     app.add_url_rule('/', endpoint='index')
+
+    from . import exercises
+    app.register_blueprint(exercises.bp)
+
+    from . import training_planner
+    app.register_blueprint(training_planner.bp)
+
+    from . import personal_trainers
+    app.register_blueprint(personal_trainers.bp)
+
     return app
 
 
@@ -35,7 +49,7 @@ def populate_dbc():
     from ft_app.models.dbc.database import db_session
     if not User.query.all():
         db_session.add(User(name="Adrian", email="<ceo@zf.com>"))
-        db_session.add(User(name="Adrian", email="<ceo@zf.com>"))
+        db_session.add(User(name="Ganesh", email="<ganesh@zf.com>"))
 
         db_session.add(BodyWeightRecord(weight=90.5))
         db_session.add(BodyWeightRecord(weight=91.2))
