@@ -54,3 +54,6 @@ li a.navbar:hover {
   background-color: #111;
 }
 
+ul.flashes {
+    color: red;
+}
