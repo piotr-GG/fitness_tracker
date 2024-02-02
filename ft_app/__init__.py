@@ -42,6 +42,11 @@ def create_app(test_config=None):
     from . import personal_trainers
     app.register_blueprint(personal_trainers.bp)
 
+    from . import blog
+    app.register_blueprint(blog.bp)
+
+    from . import about
+    app.register_blueprint(about.bp)
     return app
 
 

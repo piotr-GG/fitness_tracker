@@ -7,9 +7,11 @@
 {% block body %}
 <div class="content">
    <h1>Fitness Tracker App</h1>
-   <a href="bw_tracker/">Body weight tracker</a><br>
-   <a href="exercises/">Exercises</a><br>
-   <a href="training_planner/">Training planner</a><br>
-   <a href="personal_trainers/">Personal trainers</a><br>
+   <a href="{{ url_for('blog.index') }}">Blog</a><br>
+   <a href="{{ url_for('bw_tracker.index') }}">Body weight tracker</a><br>
+   <a href="{{ url_for('exercises.index') }}">Exercises</a><br>
+   <a href="{{ url_for('training_planner.index') }}">Training planner</a><br>
+   <a href="{{ url_for('personal_trainers.index') }}">Personal trainers</a><br>
+   <a href="{{ url_for('about.index') }}">About</a><br>
 </div>
 {% endblock %}
