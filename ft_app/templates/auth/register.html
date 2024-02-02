@@ -6,10 +6,10 @@
 
 {% block body %}
     <form method="post">
-        <label for="username">Username</label>
-        <input name="username" id="username" required>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
-        <input type="submit" value="Log In">
+        <div> {{ form.username.label }} : {{form.username() }}</div>
+        <div> {{ form.email.label }} : {{form.email() }}</div>
+        <div> {{ form.password.label }} : {{form.password() }}</div>
+        <div> {{ form.confirm_pass.label }} : {{form.confirm_pass() }}</div>
+        <input type="submit" value="Register">
     </form>
 {% endblock %}
