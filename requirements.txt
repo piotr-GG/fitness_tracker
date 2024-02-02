@@ -27,4 +27,5 @@ tornado==6.4
 typing_extensions==4.9.0
 tzdata==2023.4
 Werkzeug==3.0.1
+WTForms==3.1.2
 xyzservices==2023.10.1
