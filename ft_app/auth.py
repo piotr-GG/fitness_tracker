@@ -2,6 +2,8 @@ from flask import Blueprint, flash, g, redirect, request, session, url_for, rend
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from ft_app.forms import RegistrationForm
+from ft_app.models.dbc.database import db_session
+from ft_app.models.models import User
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -20,6 +22,12 @@ def login():
 def register():
     form = RegistrationForm(request.form)
     if request.method == "POST" and form.validate():
+        username = request.form['username']
+        password = request.form['password']
+        email = request.form['email']
+        new_user = User(username, password, email)
+        db_session.execute()
+
         flash("Muchas gracias por registrarte!")
         return redirect(url_for('auth.login'))
     return render_template("auth/register.html", form=form)

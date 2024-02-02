@@ -57,8 +57,8 @@ def create_app(test_config=None):
 def populate_dbc():
     from ft_app.models.dbc.database import db_session
     if not User.query.all():
-        db_session.add(User(name="Adrian", email="<ceo@zf.com>"))
-        db_session.add(User(name="Ganesh", email="<ganesh@zf.com>"))
+        db_session.add(User(username="Adrian", password="123", email="<ceo@zf.com>"))
+        db_session.add(User(username="Ganesh", password="Ganesh", email="<ganesh@zf.com>"))
 
         db_session.add(BodyWeightRecord(weight=90.5))
         db_session.add(BodyWeightRecord(weight=91.2))

@@ -7,15 +7,17 @@ from .dbc.database import Base
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
-    name = Column(String(50), unique=False)
+    username = Column(String(50), unique=True)
+    password = Column(String(50), unique=True)
     email = Column(String(120), unique=False)
 
-    def __init__(self, name=None, email=None):
-        self.name = name
+    def __init__(self, username, password, email):
+        self.username = username
+        self.password = password
         self.email = email
 
     def __repr__(self):
-        return f'<User {self.name!r}, {self.email!r}>'
+        return f'<User {self.username!r}, {self.email!r}>'
 
 
 class BodyWeightRecord(Base):
