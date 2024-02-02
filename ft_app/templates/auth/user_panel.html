@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>{% block title %}User panel{% endblock %}</title>
+{% endblock %}
+
+{% block body %}
+    <ul>
+        <h1>User panel options!</h1>
+        {% if g.user %}
+        <li>User panel 101</li>
+        <li>Have fun and all good stuff</li>
+        {% else %}
+        <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+        <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+        {% endif %}
+    </ul>
+{% endblock %}
