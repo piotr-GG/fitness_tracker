@@ -1,20 +1,29 @@
 from datetime import datetime
 
 from sqlalchemy import Column, Integer, String, DateTime, Float
+from werkzeug.security import generate_password_hash
+
 from .dbc.database import Base
+from ..forms import RegistrationForm
 
 
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     username = Column(String(50), unique=True)
-    password = Column(String(50), unique=False)
+    password = Column(String(120), unique=False)
     email = Column(String(120), unique=True)
 
     def __init__(self, username, password, email):
-        self.username = username
-        self.password = password
-        self.email = email
+        form = RegistrationForm(username=username, email=email, password=password, confirm_pass=password)
+        if form.validate():
+            self.username = username
+            self.password = generate_password_hash(password)
+            self.email = email
+        else:
+            res = form.print_error_message()
+            raise ValueError("Values provided for User object are not valid. Please check errors below:\n" +
+                             "\n".join(res))
 
     def __repr__(self):
         return f'<User {self.username!r}, {self.email!r}>'

@@ -25,23 +25,29 @@ def login():
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)
-    if request.method == "POST" and form.validate():
-        new_user = User(username=request.form['username'],
-                        password=request.form['password'],
-                        email=request.form['email'])
+    if request.method == "POST":
+        if form.validate():
+            new_user = User(username=request.form['username'],
+                            password=request.form['password'],
+                            email=request.form['email'])
 
-        is_already_present, msg = check_if_user_exists(new_user)
+            is_already_present, msg = check_if_user_exists(new_user)
 
-        if is_already_present:
-            flash(msg)
-            return render_template("auth/register.html", form=form)
+            if is_already_present:
+                flash(msg)
+                return render_template("auth/register.html", form=form)
 
-        try:
-            db_session.add(new_user)
-            db_session.commit()
-        except Exception as e:
-            return e
+            try:
+                db_session.add(new_user)
+                db_session.commit()
+            except Exception as e:
+                return e
 
-        flash("User account has been successfully created!")
-        return redirect(url_for('auth.login'))
+            flash("User account has been successfully created!")
+            return redirect(url_for('auth.login'))
+        else:
+            msg = form.print_error_message()
+            flash(r"There were errors during registration. Please correct them.")
+            for m in msg:
+                flash(m)
     return render_template("auth/register.html", form=form)
