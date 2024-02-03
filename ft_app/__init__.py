@@ -60,8 +60,8 @@ def populate_dbc():
         db_session.add(User(username="Adrian", password="123", email="<ceo@zf.com>"))
         db_session.add(User(username="Ganesh", password="Ganesh", email="<ganesh@zf.com>"))
 
-        db_session.add(BodyWeightRecord(weight=90.5))
-        db_session.add(BodyWeightRecord(weight=91.2))
-        db_session.add(BodyWeightRecord(weight=92.5))
-        db_session.add(BodyWeightRecord(weight=95.5))
+        db_session.add(BodyWeightRecord(weight=90.5, date="2023-01-01"))
+        db_session.add(BodyWeightRecord(weight=91.2, date="2023-01-02"))
+        db_session.add(BodyWeightRecord(weight=92.5, date="2023-01-03"))
+        db_session.add(BodyWeightRecord(weight=95.5,  date="2023-01-04"))
         db_session.commit()
