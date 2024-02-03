@@ -1,10 +1,11 @@
 import sqlite3
 
 from flask import Blueprint, flash, g, redirect, request, session, url_for, render_template
+from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from ft_app.forms import RegistrationForm
+from ft_app.forms import RegistrationForm, LoginForm
 from ft_app.models.dbc.database import db_session
 from ft_app.models.dbc.queries import check_if_user_exists
 from ft_app.models.models import User
@@ -19,7 +20,27 @@ def user_panel():
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("auth/login.html")
+    form = LoginForm(request.form)
+    if request.method == "POST":
+        username = request.form['username']
+        password = request.form['password']
+        user = db_session.execute(select(User).where(User.username == username)).fetchone()
+        error = None
+
+        if not user:
+            error = "Incorrect username."
+        elif not check_password_hash(user.User.password, password):
+            error = "Incorrect password."
+
+        user = user.User
+        if error is None:
+            session.clear()
+            session['user_id'] = user.id
+            flash("You have been successfully logged in!")
+            return redirect(url_for('index'))
+        else:
+            flash(error)
+    return render_template("auth/login.html", form=form)
 
 
 @bp.route('/register', methods=['GET', 'POST'])

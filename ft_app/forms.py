@@ -22,3 +22,8 @@ class RegistrationForm(FormErrorPrinter):
         validators.EqualTo('confirm_pass', message="Passwords must match!")
     ])
     confirm_pass = PasswordField('Repeat Password')
+
+
+class LoginForm(FormErrorPrinter):
+    username = StringField('Username', validators=[validators.DataRequired()])
+    password = PasswordField("Password", validators=[validators.DataRequired()])
