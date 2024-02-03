@@ -6,6 +6,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from ft_app.forms import RegistrationForm
 from ft_app.models.dbc.database import db_session
+from ft_app.models.dbc.queries import check_if_user_exists
 from ft_app.models.models import User
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -25,28 +26,22 @@ def login():
 def register():
     form = RegistrationForm(request.form)
     if request.method == "POST" and form.validate():
-        username = request.form['username']
-        password = request.form['password']
-        email = request.form['email']
-        new_user = User(username, password, email)
+        new_user = User(username=request.form['username'],
+                        password=request.form['password'],
+                        email=request.form['email'])
 
-        # db_session.add(new_user)
-        q = db_session.query(User).filter(User.username == username)
-        is_already_present = db_session.execute(db_session.query(q.exists())).fetchone()
-        print(is_already_present[0])
-        if is_already_present[0]:
-            flash("User with given login is already registered!")
-        else:
-            flash("Everything is fine!")
-        return redirect(url_for('auth.login'))
-        # db_session.commit()
-        #
-        # try:
-        #     pass
-        # except IntegrityError:
-        #     flash("User with given login is already registered!")
-        #     return redirect(url_for('auth.login'))
-            # return render_template("auth/register.html", form=form)
-        # flash("Muchas gracias por registrarte!")
+        is_already_present, msg = check_if_user_exists(new_user)
+
+        if is_already_present:
+            flash(msg)
+            return render_template("auth/register.html", form=form)
+
+        try:
+            db_session.add(new_user)
+            db_session.commit()
+        except Exception as e:
+            return e
+
+        flash("User account has been successfully created!")
         return redirect(url_for('auth.login'))
     return render_template("auth/register.html", form=form)
