@@ -1,3 +1,5 @@
+from sqlalchemy import select
+
 from ft_app.models.dbc.database import db_session
 from ft_app.models.models import User
 
@@ -18,3 +20,8 @@ def _user_exists_by_username(user: User):
 def _user_exists_by_email(user: User):
     q = db_session.query(User).filter(User.email == user.email)
     return db_session.execute(db_session.query(q.exists()))
+
+
+def get_user_by_id(user_id):
+    return db_session.execute(select(User).where(User.id == user_id)).fetchone().User
+

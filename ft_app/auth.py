@@ -7,7 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from ft_app.forms import RegistrationForm, LoginForm
 from ft_app.models.dbc.database import db_session
-from ft_app.models.dbc.queries import check_if_user_exists
+from ft_app.models.dbc.queries import check_if_user_exists, get_user_by_id
 from ft_app.models.models import User
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -72,3 +72,13 @@ def register():
             for m in msg:
                 flash(m)
     return render_template("auth/register.html", form=form)
+
+
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = get_user_by_id(user_id)

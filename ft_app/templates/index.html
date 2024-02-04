@@ -6,6 +6,11 @@
 
 {% block body %}
 <div class="content">
+   {% if g.user %}
+      <h2>Hello, {{ g.user.username }}!</h2>
+   {% else %}
+      <h2>Hello, unknown user!</h2>
+   {% endif %}
    <h1>Fitness Tracker App</h1>
    <a href="{{ url_for('blog.index') }}">Blog</a><br>
    <a href="{{ url_for('bw_tracker.index') }}">Body weight tracker</a><br>
