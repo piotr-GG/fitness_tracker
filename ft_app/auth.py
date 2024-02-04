@@ -1,3 +1,4 @@
+import functools
 import sqlite3
 
 from flask import Blueprint, flash, g, redirect, request, session, url_for, render_template
@@ -31,8 +32,9 @@ def login():
             error = "Incorrect username."
         elif not check_password_hash(user.User.password, password):
             error = "Incorrect password."
+        else:
+            user = user.User
 
-        user = user.User
         if error is None:
             session.clear()
             session['user_id'] = user.id
@@ -82,3 +84,18 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = get_user_by_id(user_id)
+
+
+@bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect((url_for('index')))
+
+
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('auth.login'))
+        return view(**kwargs)
+    return wrapped_view
