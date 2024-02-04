@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, String, DateTime, Float
+from sqlalchemy import Column, Integer, String, DateTime, Float, Text, ForeignKey
 from werkzeug.security import generate_password_hash
 
 from .dbc.database import Base
@@ -41,3 +41,12 @@ class BodyWeightRecord(Base):
 
     def __repr__(self):
         return f'<BW Record {self.id!r},{self.date!r},{self.weight!r}>'
+
+
+class BlogPost(Base):
+    __tablename__ = "blog_posts"
+    id = Column(Integer, primary_key=True)
+    date = Column(DateTime, default=datetime.utcnow)
+    title = Column(String(200))
+    body = Column(Text)
+    user_id = Column(Integer, ForeignKey(f"{User.__tablename__}.id"))

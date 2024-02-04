@@ -1,7 +1,7 @@
 from sqlalchemy import select
 
 from ft_app.models.dbc.database import db_session
-from ft_app.models.models import User
+from ft_app.models.models import User, BlogPost
 
 
 def check_if_user_exists(user: User):
@@ -25,3 +25,7 @@ def _user_exists_by_email(user: User):
 def get_user_by_id(user_id):
     return db_session.execute(select(User).where(User.id == user_id)).fetchone().User
 
+
+def get_all_posts():
+    q = db_session.query(BlogPost).all()
+    return db_session.execute(db_session.query(q))
