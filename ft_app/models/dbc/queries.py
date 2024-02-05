@@ -27,5 +27,8 @@ def get_user_by_id(user_id):
 
 
 def get_all_posts():
-    q = db_session.query(BlogPost).all()
-    return db_session.execute(db_session.query(q))
+    # q = db_session.query(BlogPost).all()
+    ret_val = []
+    ret = db_session.execute(select(BlogPost))
+    for record in ret:
+        ret_val.append(ret.BlogPost)

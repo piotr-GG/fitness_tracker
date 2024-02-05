@@ -9,3 +9,8 @@ bp = Blueprint("blog", __name__, url_prefix="/blog")
 def index():
     posts = get_all_posts().fetchall()
     return render_template("blog/index.html", posts=posts)
+
+
+@bp.route('/create', methods=["POST", "GET"])
+def create():
+    return "Poczekajcie!"

@@ -1,8 +1,9 @@
+import datetime
 import os
 from flask import Flask, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 
-from ft_app.models.models import User, BodyWeightRecord
+from ft_app.models.models import User, BodyWeightRecord, BlogPost
 
 
 def create_app(test_config=None):
@@ -57,11 +58,16 @@ def create_app(test_config=None):
 def populate_dbc():
     from ft_app.models.dbc.database import db_session
     if not User.query.all():
-        db_session.add(User(username="Adrian", password="123567", email="ceo@gmail.com"))
-        db_session.add(User(username="Ganesh", password="Ganesh", email="ganesh@gmail.com"))
+        db_session.add(User(username="adrian", password="1234567", email="ceo@gmail.com", is_moderator=True))
+        db_session.add(User(username="ganesh", password="ganesh", email="ganesh@gmail.com"))
 
         db_session.add(BodyWeightRecord(weight=90.5, date="2023-01-01"))
         db_session.add(BodyWeightRecord(weight=91.2, date="2023-01-02"))
         db_session.add(BodyWeightRecord(weight=92.5, date="2023-01-03"))
         db_session.add(BodyWeightRecord(weight=95.5,  date="2023-01-04"))
+
+        db_session.add(BlogPost(date=datetime.datetime.utcnow(),
+                                title="yyyy, eee, yyy",
+                                body="Poczekajcie, muszę pomyśleć!",
+                                user_id=1))
         db_session.commit()

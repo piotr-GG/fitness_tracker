@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, String, DateTime, Float, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, Float, Text, ForeignKey, Boolean
 from werkzeug.security import generate_password_hash
 
 from .dbc.database import Base
@@ -13,20 +13,22 @@ class User(Base):
     username = Column(String(50), unique=True)
     password = Column(String(120), unique=False)
     email = Column(String(120), unique=True)
+    is_moderator = Column(Boolean(), default=False)
 
-    def __init__(self, username, password, email):
+    def __init__(self, username, password, email, is_moderator=False):
         form = RegistrationForm(username=username, email=email, password=password, confirm_pass=password)
         if form.validate():
             self.username = username
             self.password = generate_password_hash(password)
             self.email = email
+            self.is_moderator = is_moderator
         else:
             res = form.print_error_message()
             raise ValueError("Values provided for User object are not valid. Please check errors below:\n" +
                              "\n".join(res))
 
     def __repr__(self):
-        return f'<User {self.username!r}, {self.email!r}>'
+        return f'<User {self.username!r}, {self.email!r}, is_moderator: {self.is_moderator!r}>'
 
 
 class BodyWeightRecord(Base):
@@ -50,3 +52,9 @@ class BlogPost(Base):
     title = Column(String(200))
     body = Column(Text)
     user_id = Column(Integer, ForeignKey(f"{User.__tablename__}.id"))
+
+    def __init__(self, date, title, body, user_id):
+        self.date = date
+        self.title = title
+        self.body = body
+        self.user_id = user_id
