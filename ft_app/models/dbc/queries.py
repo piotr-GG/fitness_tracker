@@ -35,3 +35,7 @@ def get_all_posts():
     for r in db_data:
         results.append(Result(r[0], r[1]))
     return reversed(results)
+
+
+def get_post_by_id(post_id):
+    return db_session.scalars(select(BlogPost).where(BlogPost.id == post_id)).one()

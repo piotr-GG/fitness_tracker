@@ -23,6 +23,10 @@
                     </div>
                 </header>
                 <p class="body">{{ blog_post.post.body }}</p>
+                {% if blog_post.user.id == g.user.id %}
+                    <a href="{{ url_for('blog.update', post_id=blog_post.post.id) }}">Edit</a>
+                    <a href="{{ url_for('blog.delete', post_id=blog_post.post.id) }}">Delete</a>
+                {% endif %}
             </article>
             {% if not loop.last %}
                 <hr>
