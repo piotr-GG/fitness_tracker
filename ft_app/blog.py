@@ -7,7 +7,7 @@ bp = Blueprint("blog", __name__, url_prefix="/blog")
 
 @bp.route('/', methods=["POST", "GET"])
 def index():
-    posts = get_all_posts().fetchall()
+    posts = get_all_posts()
     return render_template("blog/index.html", posts=posts)
 
 

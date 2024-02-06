@@ -1,3 +1,5 @@
+from collections import namedtuple
+
 from sqlalchemy import select
 
 from ft_app.models.dbc.database import db_session
@@ -27,8 +29,9 @@ def get_user_by_id(user_id):
 
 
 def get_all_posts():
-    # q = db_session.query(BlogPost).all()
-    ret_val = []
-    ret = db_session.execute(select(BlogPost))
-    for record in ret:
-        ret_val.append(ret.BlogPost)
+    Result = namedtuple('BlogPostData', ['post', 'user'])
+    results = []
+    db_data = db_session.execute(select(BlogPost, User).where(BlogPost.user_id == User.id))
+    for r in db_data:
+        results.append(Result(r[0], r[1]))
+    return results

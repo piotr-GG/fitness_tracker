@@ -70,4 +70,9 @@ def populate_dbc():
                                 title="yyyy, eee, yyy",
                                 body="Poczekajcie, muszę pomyśleć!",
                                 user_id=1))
+
+        db_session.add(BlogPost(date=datetime.datetime.utcnow(),
+                                title="Jestem największym koksem",
+                                body="Jestem Szefem, ja jestem Szefem!",
+                                user_id=1))
         db_session.commit()
