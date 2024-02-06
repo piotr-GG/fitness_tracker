@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{%extends 'base.html' %}
 
-</body>
-</html>
+{% block head %}
+<title>Create new blog post</title>
+{% endblock %}
+
+{% block body %}
+    <form method="post">
+        <div> {{ form.date.label }} : {{ form.date() }} </div>
+        <div> {{ form.title.label }} : {{ form.title() }} </div>
+        <div> {{ form.body.label }} : {{ form.body() }} </div>
+        <input type="submit" value="Create">
+    </form>
+{% endblock %}

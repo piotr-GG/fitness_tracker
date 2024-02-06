@@ -1,4 +1,9 @@
+import datetime
+from datetime import date
+
 from wtforms import Form, StringField, PasswordField, validators
+from wtforms.fields.datetime import DateField
+from wtforms.validators import ValidationError, StopValidation
 
 
 class FormErrorPrinter(Form):
@@ -27,3 +32,15 @@ class RegistrationForm(FormErrorPrinter):
 class LoginForm(FormErrorPrinter):
     username = StringField('Username', validators=[validators.DataRequired()])
     password = PasswordField("Password", validators=[validators.DataRequired()])
+
+
+def validate_post_date(form, field):
+    if field.data > datetime.datetime.utcnow().date():
+        # field.message = "Cannot create blog post with date set in future!"
+        raise StopValidation("Cannot create blog post with date set in future!")
+
+
+class BlogPostCreateForm(FormErrorPrinter):
+    date = DateField('Date added', default=date.today(), validators=[validators.DataRequired(), validate_post_date])
+    title = StringField('Title', validators=[validators.Length(min=5, max=200)])
+    body = StringField('Body', validators=[validators.Length(min=5)])
