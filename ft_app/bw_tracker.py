@@ -1,7 +1,8 @@
 from flask import (
-    Blueprint, flash, redirect, render_template, request, url_for
+    Blueprint, flash, redirect, render_template, request, url_for, g
 )
 
+from ft_app.models.dbc.queries import get_bw_records_by_id
 from ft_app.models.models import BodyWeightRecord
 from ft_app.models.dbc.database import db_session
 
@@ -28,5 +29,9 @@ def index():
         return redirect('/bw_tracker')
 
     else:
-        bw_records = BodyWeightRecord.query.all()
-        return render_template('bw_tracker/index.html', records=bw_records)
+        if g.user:
+            bw_records = get_bw_records_by_id(g.user.id)
+            return render_template('bw_tracker/index.html', records=bw_records)
+        else:
+            flash("You need to be logged in in order to use BodyWeightTracker")
+            return redirect(url_for("auth.login"))
