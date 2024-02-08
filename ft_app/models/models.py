@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy import Column, Integer, String, DateTime, Float, Text, ForeignKey, Boolean
+from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash
 
 from .dbc.database import Base
@@ -14,6 +15,9 @@ class User(Base):
     password = Column(String(120), unique=False)
     email = Column(String(120), unique=True)
     is_moderator = Column(Boolean(), default=False)
+
+    blog_posts = relationship("BlogPost", back_populates="user")
+    bw_records = relationship("BodyWeightRecord", back_populates="user")
 
     def __init__(self, username, password, email, is_moderator=False):
         form = RegistrationForm(username=username, email=email, password=password, confirm_pass=password)
@@ -36,10 +40,14 @@ class BodyWeightRecord(Base):
     id = Column(Integer, primary_key=True)
     date = Column(DateTime, default=datetime.utcnow, unique=True)
     weight = Column(Float)
+    user_id = Column(Integer, ForeignKey(f"{User.__tablename__}.id"))
 
-    def __init__(self, weight=None, date=None):
+    user = relationship("User", back_populates="bw_records")
+
+    def __init__(self, weight, date, user_id):
         self.weight = weight
         self.date = datetime.strptime(date, "%Y-%m-%d").date()
+        self.user_id = user_id
 
     def __repr__(self):
         return f'<BW Record {self.id!r},{self.date!r},{self.weight!r}>'
@@ -52,6 +60,8 @@ class BlogPost(Base):
     title = Column(String(200))
     body = Column(Text)
     user_id = Column(Integer, ForeignKey(f"{User.__tablename__}.id"))
+
+    user = relationship("User", back_populates="blog_posts")
 
     def __init__(self, date, title, body, user_id):
         self.date = date

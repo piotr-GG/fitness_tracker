@@ -3,7 +3,7 @@ from collections import namedtuple
 from sqlalchemy import select
 
 from ft_app.models.dbc.database import db_session
-from ft_app.models.models import User, BlogPost
+from ft_app.models.models import User, BlogPost, BodyWeightRecord
 
 
 def check_if_user_exists(user: User):
@@ -39,3 +39,7 @@ def get_all_posts():
 
 def get_post_by_id(post_id):
     return db_session.scalars(select(BlogPost).where(BlogPost.id == post_id)).one()
+
+
+def get_bw_records_by_id(user_id):
+    return db_session.scalars(select(BodyWeightRecord).where(BodyWeightRecord.user_id == user_id)).all()
