@@ -2,6 +2,7 @@ from datetime import datetime
 
 from flask import Blueprint, redirect, render_template, request, flash, session, url_for
 
+from ft_app.auth import login_required
 from ft_app.forms import BlogPostCreateForm
 from ft_app.models.dbc.database import db_session
 from ft_app.models.dbc.queries import get_all_posts, get_post_by_id
@@ -43,16 +44,14 @@ def create():
 def update(post_id):
     blog_post = get_post_by_id(post_id)
     form = BlogPostCreateForm(request.form)
-    form.date.data = blog_post.date
+    form.date.render_kw = {'disabled': 'disabled'}
     form.title.data = blog_post.title
     form.body.data = blog_post.body
 
     if request.method == "POST":
-        date = datetime.strptime(request.form["date"], "%Y-%m-%d").date()
         title = request.form["title"]
         body = request.form["body"]
 
-        blog_post.date = date
         blog_post.title = title
         blog_post.body = body
         db_session.commit()
@@ -62,5 +61,10 @@ def update(post_id):
 
 
 @bp.route('/<int:post_id>/delete', methods=['GET', 'POST'])
+@login_required
 def delete(post_id):
-    return "Poczekajcie, a teraz usuwamy .... " + str(post_id)
+    post = get_post_by_id(post_id)
+    db_session.delete(post)
+    db_session.commit()
+    flash("Your post has been successfully deleted!")
+    return redirect(url_for("blog.index"))
