@@ -13,7 +13,8 @@ App will use following technologies:
 - **flask** - as webapp framework
 - **pandas** - for reading/writing data from Excel spreadsheet
 - **bokeh** - for plotting
-- **sqlite** - to provide database functionality
+- **flasksqlalchemy / sqlalchemy** - for DBC ORM
 - **PyQt** - for GUI creation
 - **pytest** - for testing
+
 
