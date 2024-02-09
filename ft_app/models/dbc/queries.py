@@ -29,12 +29,7 @@ def get_user_by_id(user_id):
 
 
 def get_all_posts():
-    Result = namedtuple('BlogPostData', ['post', 'user'])
-    results = []
-    db_data = db_session.execute(select(BlogPost, User).where(BlogPost.user_id == User.id).order_by(BlogPost.user_id))
-    for r in db_data:
-        results.append(Result(r[0], r[1]))
-    return reversed(results)
+    return reversed(db_session.scalars(select(BlogPost).order_by(BlogPost.date)).all())
 
 
 def get_post_by_id(post_id):

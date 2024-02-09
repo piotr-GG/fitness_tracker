@@ -18,14 +18,19 @@
             <article class="post">
                 <header>
                     <div>
-                        <h1>{{ blog_post.title }}</h1>
-                        <div class="about">by {{ blog_post.user.username }} on {{ blog_post.post.date.strftime('%Y-%m-%d') }}</div>
+                        <h2>{{ blog_post.title }}</h2>
+                        <div class="about">
+                            by {{ blog_post.user.username }} on {{ blog_post.date.strftime('%Y-%m-%d') }}
+                        {% if blog_post.last_edited %}
+                            , last edited on {{ blog_post.last_edited.strftime('%Y-%m-%d') }}
+                        {% endif %}
+                        </div>
                     </div>
                 </header>
-                <p class="body">{{ blog_post.post.body }}</p>
+                <p class="body">{{ blog_post.body }}</p>
                 {% if blog_post.user.id == g.user.id %}
-                    <a href="{{ url_for('blog.update', post_id=blog_post.post.id) }}">Edit</a>
-                    <a href="{{ url_for('blog.delete', post_id=blog_post.post.id) }}">Delete</a>
+                    <a href="{{ url_for('blog.update', post_id=blog_post.id) }}">Edit</a>
+                    <a href="{{ url_for('blog.delete', post_id=blog_post.id) }}">Delete</a>
                 {% endif %}
             </article>
             {% if not loop.last %}

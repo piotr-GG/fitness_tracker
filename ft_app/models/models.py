@@ -57,6 +57,7 @@ class BlogPost(Base):
     __tablename__ = "blog_posts"
     id = Column(Integer, primary_key=True)
     date = Column(DateTime, default=datetime.utcnow)
+    last_edited = Column(DateTime, default=None, nullable=True)
     title = Column(String(200))
     body = Column(Text)
     user_id = Column(Integer, ForeignKey(f"{User.__tablename__}.id"))
