@@ -2,6 +2,30 @@
 
 {% block head %}
 <title>TEST</title>
+ <style>
+   html, body {
+     box-sizing: border-box;
+     display: flow-root;
+     height: 100%;
+     margin: 0;
+     padding: 0;
+   }
+ </style>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-3.3.4.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.3.4.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.3.4.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.3.4.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-3.3.4.min.js"
+        crossorigin="anonymous"></script>
+
+<script>
+   {{ bokeh_script }}
+</script>
+
 {% endblock %}
 
 {% block body %}
@@ -39,5 +63,12 @@
          <input type="submit" value="Add record">
       </form>
    </div>
+   <div id="myplot"></div>
+
 </div>
+<script>
+fetch('/bw_tracker/plot')
+ .then(function(response) { return response.json(); })
+ .then(function(item) { return Bokeh.embed.embed_item(item); })
+</script>
 {% endblock %}
