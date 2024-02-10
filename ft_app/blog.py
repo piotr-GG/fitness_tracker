@@ -18,6 +18,7 @@ def index():
 
 
 @bp.route('/create', methods=["POST", "GET"])
+@login_required
 def create():
     form = BlogPostCreateForm(request.form)
     if request.method == "POST":
@@ -41,6 +42,7 @@ def create():
 
 
 @bp.route('/<int:post_id>/update', methods=['GET', 'POST'])
+@login_required
 def update(post_id):
     blog_post = get_post_by_id(post_id)
     form = BlogPostCreateForm(request.form)

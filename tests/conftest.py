@@ -38,12 +38,29 @@ def runner(app):
     return app.test_cli_runner()
 
 
+class AuthActions:
+    def __init__(self, client):
+        self._client = client
+
+    def login(self, username='test_1234', password='test_1234'):
+        return self._client.post(
+            '/auth/login',
+            data={'username': username,
+                  'password': password}
+        )
+
+
+@pytest.fixture
+def auth(client):
+    return AuthActions(client)
+
+
 def create_test_data():
     from ft_app.models.models import User, BodyWeightRecord, BlogPost
     from ft_app.models.dbc.database import db_session
 
-    db_session.add(User(username="adrian", password="1234567", email="ceo@gmail.com", is_moderator=True))
-    db_session.add(User(username="ganesh", password="ganesh", email="ganesh@gmail.com"))
+    db_session.add(User(username="test_1234", password="test_1234", email="test@gmail.com", is_moderator=True))
+    db_session.add(User(username="user_1234", password="user_1234", email="user@gmail.com"))
 
     db_session.add(BodyWeightRecord(weight=90.5, date="2023-01-01", user_id=1))
     db_session.add(BodyWeightRecord(weight=91.2, date="2023-01-02", user_id=1))
