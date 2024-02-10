@@ -38,7 +38,7 @@ class User(Base):
 class BodyWeightRecord(Base):
     __tablename__ = "bw_records"
     id = Column(Integer, primary_key=True)
-    date = Column(DateTime, default=datetime.utcnow, unique=True)
+    date = Column(DateTime, default=datetime.utcnow)
     weight = Column(Float)
     user_id = Column(Integer, ForeignKey(f"{User.__tablename__}.id"))
 

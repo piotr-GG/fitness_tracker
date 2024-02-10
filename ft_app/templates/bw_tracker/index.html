@@ -30,9 +30,6 @@
 
 {% block body %}
 <div class="content">
-   {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-   {% endfor %}
    <h1>Body weight tracker</h1>
    {% if records|length < 1 %}
       <h4>There are no body weight records so far. Please add some records first.</h4>
@@ -57,9 +54,9 @@
       </table>
    {% endif %}
    <div class="form">
-      <form method="POST">
-         <input type="date" name="date" id="date">
-         <input type="text" name="weight" id="weight">
+      <form method="post">
+         <div> {{ form.date.label }} : {{ form.date() }}</div>
+         <div> {{ form.weight.label }} : {{ form.weight() }}</div>
          <input type="submit" value="Add record">
       </form>
    </div>

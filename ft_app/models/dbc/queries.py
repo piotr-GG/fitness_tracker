@@ -37,4 +37,8 @@ def get_post_by_id(post_id):
 
 
 def get_bw_records_by_id(user_id):
-    return db_session.scalars(select(BodyWeightRecord).where(BodyWeightRecord.user_id == user_id)).all()
+    return (db_session.scalars(
+        select(BodyWeightRecord)
+        .where(BodyWeightRecord.user_id == user_id)
+        .order_by(BodyWeightRecord.date))
+            .all())
