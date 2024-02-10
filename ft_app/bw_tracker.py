@@ -1,15 +1,14 @@
 import json
-
-from bokeh.sampledata.iris import flowers
 from flask import (
     Blueprint, flash, redirect, render_template, request, url_for, g
 )
 
+from ft_app.auth import login_required
 from ft_app.models.dbc.queries import get_bw_records_by_id
 from ft_app.models.models import BodyWeightRecord
 from ft_app.models.dbc.database import db_session
 from bokeh.plotting import figure
-from bokeh.embed import components, json_item
+from bokeh.embed import json_item
 
 bp = Blueprint("bw_tracker", __name__, url_prefix="/bw_tracker")
 
@@ -36,9 +35,6 @@ def index():
     else:
         if g.user:
             bw_records = get_bw_records_by_id(g.user.id)
-            plot = figure()
-            plot.circle([1, 2], [3, 4])
-            script, div = components(plot)
             return render_template('bw_tracker/index.html',
                                    records=bw_records)
         else:
@@ -46,19 +42,23 @@ def index():
             return redirect(url_for("auth.login"))
 
 
-colormap = {'setosa': 'red', 'versicolor': 'green', 'virginica': 'blue'}
-colors = [colormap[x] for x in flowers['species']]
-
-
 def make_plot(x, y):
-    p = figure(title="Iris Morphology", sizing_mode="fixed", width=400, height=400)
-    p.xaxis.axis_label = x
-    p.yaxis.axis_label = y
-    p.circle(flowers[x], flowers[y], color=colors, fill_alpha=0.2, size=10)
+    p = figure(title="Body weight plot", sizing_mode="fixed", width=800, height=400, x_axis_type="datetime")
+    p.xaxis.axis_label = "Date"
+    p.yaxis.axis_label = "Body weight [kg]"
+    p.line(x, y)
+    p.scatter(x, y)
     return p
 
 
+@login_required
 @bp.route('/plot')
 def plot():
-    p = make_plot('petal_width', 'petal_length')
-    return json.dumps(json_item(p, "myplot"))
+    if g.user:
+        data = get_bw_records_by_id(g.user.id)
+        x, y = [], []
+        for record in data:
+            x.append(record.date)
+            y.append(record.weight)
+        p = make_plot(x, y)
+        return json.dumps(json_item(p, "myplot"))
