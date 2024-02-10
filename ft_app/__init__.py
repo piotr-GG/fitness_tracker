@@ -1,30 +1,30 @@
 import datetime
 import os
-from flask import Flask, render_template, redirect
-from flask_sqlalchemy import SQLAlchemy
-
-from ft_app.models.models import User, BodyWeightRecord, BlogPost
+from flask import Flask, render_template
 
 
 def create_app(test_config=None):
-    app = Flask(__name__)
+    app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'fitness_tracker.sqlite')
     )
-    if test_config is not None:
+    if test_config is None:
         app.config.from_pyfile('config.py', silent=True)
     else:
-        app.config.from_mapping(test_config)
+        app.config.update(test_config)
 
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
 
-    from .models.dbc.database import init_db
-    init_db()
-    populate_dbc()
+    with app.app_context():
+        from .models.dbc.database import init_db
+        init_db()
+
+    if not app.config.get("TESTING"):
+        populate_dbc()
 
     @app.route('/')
     def index():
@@ -57,6 +57,7 @@ def create_app(test_config=None):
 
 def populate_dbc():
     from ft_app.models.dbc.database import db_session
+    from ft_app.models.models import User, BodyWeightRecord, BlogPost
     if not User.query.all():
         db_session.add(User(username="adrian", password="1234567", email="ceo@gmail.com", is_moderator=True))
         db_session.add(User(username="ganesh", password="ganesh", email="ganesh@gmail.com"))
