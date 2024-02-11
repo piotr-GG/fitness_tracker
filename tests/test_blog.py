@@ -4,11 +4,9 @@ import pytest
 def test_blog_index(client, auth):
     response = client.get('/blog/')
     assert b"Welcome to the blog!" in response.data
-    print(response.data)
 
     auth.login()
     response = client.get('/blog/')
-    print(response.data)
     assert b"New post" in response.data
 
 

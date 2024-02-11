@@ -7,7 +7,7 @@ import tempfile
 from ft_app import create_app
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def app():
     db_fd, db_path = tempfile.mkstemp()
 
@@ -15,13 +15,11 @@ def app():
         'TESTING': True,
         'DATABASE': db_path
     })
-    print("DB PATH: ", db_path)
 
     with app.app_context():
         from ft_app.models.dbc.database import init_db
         init_db()
-
-    create_test_data()
+        create_test_data()
 
     yield app
     os.close(db_fd)
