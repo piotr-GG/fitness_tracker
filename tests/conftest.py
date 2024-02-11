@@ -57,7 +57,7 @@ def create_test_data():
     from ft_app.models.models import User, BodyWeightRecord, BlogPost
     from ft_app.models.dbc.database import db_session
 
-    db_session.add(User(username="test_1234", password="test_1234", email="test@gmail.com", is_moderator=True))
+    db_session.add(User(username="test_1234", password="test_1234", email="test_1234@gmail.com", is_moderator=True))
     db_session.add(User(username="user_1234", password="user_1234", email="user@gmail.com"))
 
     db_session.add(BodyWeightRecord(weight=90.5, date="2023-01-01", user_id=1))
