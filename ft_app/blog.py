@@ -4,9 +4,9 @@ from flask import Blueprint, redirect, render_template, request, flash, session,
 
 from ft_app.auth import login_required
 from ft_app.forms import BlogPostCreateForm
-from ft_app.models.dbc.database import db_session
-from ft_app.models.dbc.queries import get_all_posts, get_post_by_id
-from ft_app.models.models import BlogPost
+from ft_app.dbc.database import db_session
+from ft_app.dbc.queries import get_all_posts, get_post_by_id
+from ft_app.models import BlogPost
 
 bp = Blueprint("blog", __name__, url_prefix="/blog")
 

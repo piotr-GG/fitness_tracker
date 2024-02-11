@@ -4,8 +4,8 @@ from sqlalchemy import Column, Integer, String, DateTime, Float, Text, ForeignKe
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash
 
-from .dbc.database import Base
-from ..forms import RegistrationForm
+from ft_app.dbc.database import Base
+from ft_app.forms import RegistrationForm
 
 
 class User(Base):

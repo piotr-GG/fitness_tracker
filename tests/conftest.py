@@ -17,7 +17,7 @@ def app():
     })
 
     with app.app_context():
-        from ft_app.models.dbc.database import init_db
+        from ft_app.dbc.database import init_db
         init_db()
         create_test_data()
 
@@ -54,8 +54,8 @@ def auth(client):
 
 
 def create_test_data():
-    from ft_app.models.models import User, BodyWeightRecord, BlogPost
-    from ft_app.models.dbc.database import db_session
+    from ft_app.models import User, BodyWeightRecord, BlogPost
+    from ft_app.dbc.database import db_session
 
     db_session.add(User(username="test_1234", password="test_1234", email="test_1234@gmail.com", is_moderator=True))
     db_session.add(User(username="user_1234", password="user_1234", email="user@gmail.com"))

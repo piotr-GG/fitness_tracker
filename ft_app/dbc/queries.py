@@ -1,9 +1,7 @@
-from collections import namedtuple
-
 from sqlalchemy import select
 
-from ft_app.models.dbc.database import db_session
-from ft_app.models.models import User, BlogPost, BodyWeightRecord
+from ft_app.dbc.database import db_session
+from ft_app.models import User, BlogPost, BodyWeightRecord
 
 
 def check_if_user_exists(user: User):

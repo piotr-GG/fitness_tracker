@@ -1,15 +1,13 @@
 import functools
-import sqlite3
 
 from flask import Blueprint, flash, g, redirect, request, session, url_for, render_template
 from sqlalchemy import select
-from sqlalchemy.exc import IntegrityError
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash
 
 from ft_app.forms import RegistrationForm, LoginForm
-from ft_app.models.dbc.database import db_session
-from ft_app.models.dbc.queries import check_if_user_exists, get_user_by_id
-from ft_app.models.models import User
+from ft_app.dbc.database import db_session
+from ft_app.dbc.queries import check_if_user_exists, get_user_by_id
+from ft_app.models import User
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 

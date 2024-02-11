@@ -20,7 +20,7 @@ def create_app(test_config=None):
         pass
 
     with app.app_context():
-        from .models.dbc.database import init_db
+        from ft_app.dbc.database import init_db
         init_db()
 
     if not app.config.get("TESTING"):
@@ -56,8 +56,8 @@ def create_app(test_config=None):
 
 
 def populate_dbc():
-    from ft_app.models.dbc.database import db_session
-    from ft_app.models.models import User, BodyWeightRecord, BlogPost
+    from ft_app.dbc.database import db_session
+    from ft_app.models import User, BodyWeightRecord, BlogPost
     if not User.query.all():
         db_session.add(User(username="adrian", password="1234567", email="ceo@gmail.com", is_moderator=True))
         db_session.add(User(username="ganesh", password="ganesh", email="ganesh@gmail.com"))

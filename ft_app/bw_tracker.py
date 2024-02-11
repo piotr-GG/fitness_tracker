@@ -1,16 +1,14 @@
 import json
-import sqlite3
 
-import sqlalchemy.exc
 from flask import (
     Blueprint, flash, redirect, render_template, request, url_for, g
 )
 
 from ft_app.auth import login_required
 from ft_app.forms import BodyWeightRecordForm
-from ft_app.models.dbc.queries import get_bw_records_by_id
-from ft_app.models.models import BodyWeightRecord
-from ft_app.models.dbc.database import db_session
+from ft_app.dbc.queries import get_bw_records_by_id
+from ft_app.models import BodyWeightRecord
+from ft_app.dbc.database import db_session
 from bokeh.plotting import figure
 from bokeh.embed import json_item
 

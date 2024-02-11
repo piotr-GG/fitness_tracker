@@ -1,5 +1,4 @@
-from flask import Blueprint, flash, redirect, render_template, request
-from ft_app.models.dbc.database import db_session
+from flask import Blueprint, render_template
 
 bp = Blueprint("exercises", __name__, url_prefix="/exercises")
 
