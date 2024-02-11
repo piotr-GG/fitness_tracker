@@ -5,11 +5,13 @@ from sqlalchemy import select
 from werkzeug.security import check_password_hash
 
 from ft_app.forms import RegistrationForm, LoginForm
-from ft_app.dbc.database import db_session
+from ft_app.dbc.database import DBC
 from ft_app.dbc.queries import check_if_user_exists, get_user_by_id
 from ft_app.models import User
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
+
+db_session = DBC.db_session
 
 
 @bp.route('/user_panel', methods=['GET', 'POST'])
@@ -96,4 +98,5 @@ def login_required(view):
         if g.user is None:
             return redirect(url_for('auth.login'))
         return view(**kwargs)
+
     return wrapped_view

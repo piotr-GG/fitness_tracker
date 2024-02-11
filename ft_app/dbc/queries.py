@@ -1,7 +1,9 @@
 from sqlalchemy import select
 
-from ft_app.dbc.database import db_session
+from ft_app.dbc.database import DBC
 from ft_app.models import User, BlogPost, BodyWeightRecord
+
+db_session = DBC.db_session
 
 
 def check_if_user_exists(user: User):

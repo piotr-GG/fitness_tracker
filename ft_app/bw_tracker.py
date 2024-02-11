@@ -8,11 +8,13 @@ from ft_app.auth import login_required
 from ft_app.forms import BodyWeightRecordForm
 from ft_app.dbc.queries import get_bw_records_by_id
 from ft_app.models import BodyWeightRecord
-from ft_app.dbc.database import db_session
+from ft_app.dbc.database import DBC
 from bokeh.plotting import figure
 from bokeh.embed import json_item
 
 bp = Blueprint("bw_tracker", __name__, url_prefix="/bw_tracker")
+
+db_session = DBC.db_session
 
 
 @bp.route('/', methods=['POST', 'GET'])
