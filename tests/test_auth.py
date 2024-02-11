@@ -11,7 +11,7 @@ def test_register(client, app):
         'confirm_pass': 'new_password123',
         'email': 'newuser@gmail.com'
     })
-    assert response.headers["Location"] == "auth/login"
+    assert response.headers["Location"] == "/auth/login"
 
     with app.app_context():
         q = db_session.query(User).filter(User.username == "new_user_123")
