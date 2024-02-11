@@ -1,0 +1,21 @@
+[project]
+name = "ft_app"
+version = "1.0.0"
+description = "Fitness tracker app"
+dependencies = [
+    "flask",
+    "sqlalchemy",
+    "bokeh",
+    "WTForms"
+]
+
+[build-system]
+requires = ["flit-core<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["ft_app"]
