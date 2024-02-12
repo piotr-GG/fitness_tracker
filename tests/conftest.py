@@ -18,12 +18,10 @@ def app():
     })
 
     with app.app_context():
-        DBC.create_engine()
-        DBC.create_db_session()
         DBC.init_db()
 
-    with app.app_context():
-        create_test_data()
+    create_test_data()
+
     yield app
     os.close(db_fd)
     os.unlink(db_path)
