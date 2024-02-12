@@ -1,5 +1,5 @@
 [project]
-name = "fitness_tracker"
+name = "ft_app"
 version = "1.0.0"
 description = "Fitness tracker app"
 dependencies = [
