@@ -6,22 +6,27 @@ Base = declarative_base()
 
 
 class DBC:
-    engine = None
-    db_session = None
+    _engine = None
+    _db_session = None
 
     @staticmethod
     def create_engine():
-        DBC.engine = create_engine(f"sqlite:///{current_app.config['DATABASE']}")
+        DBC._engine = create_engine(f"sqlite:///{current_app.config['DATABASE']}")
 
     @staticmethod
     def create_db_session():
-        DBC.db_session = scoped_session(sessionmaker(autocommit=False,
-                                                     autoflush=False,
-                                                     bind=DBC.engine))
+        DBC._db_session = scoped_session(sessionmaker(autocommit=False,
+                                                      autoflush=False,
+                                                      bind=DBC._engine))
 
     @staticmethod
     def init_db():
-        from ft_app.models import User, BlogPost, BodyWeightRecord
+        # noinspection PyUnresolvedReferences
+        import ft_app.models
         DBC.create_engine()
         DBC.create_db_session()
-        Base.metadata.create_all(bind=DBC.engine)
+        Base.metadata.create_all(bind=DBC._engine)
+
+    @staticmethod
+    def get_db_session():
+        return DBC._db_session

@@ -4,14 +4,12 @@ from flask import Blueprint, flash, g, redirect, request, session, url_for, rend
 from sqlalchemy import select
 from werkzeug.security import check_password_hash
 
+from ft_app import DBC
 from ft_app.forms import RegistrationForm, LoginForm
-from ft_app.dbc.database import DBC
 from ft_app.dbc.queries import check_if_user_exists, get_user_by_id
 from ft_app.models import User
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
-
-db_session = DBC.db_session
 
 
 @bp.route('/user_panel', methods=['GET', 'POST'])
@@ -25,6 +23,7 @@ def login():
     if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
+        db_session = DBC.get_db_session()
         user = db_session.execute(select(User).where(User.username == username)).fetchone()
         error = None
 
@@ -61,6 +60,7 @@ def register():
                 return render_template("auth/register.html", form=form)
 
             try:
+                db_session = DBC.get_db_session()
                 db_session.add(new_user)
                 db_session.commit()
             except Exception as e:

@@ -2,8 +2,10 @@ import datetime
 import os
 import pytest
 import tempfile
+
 from ft_app import create_app
 from ft_app.dbc.database import DBC
+from ft_app.models import User, BodyWeightRecord, BlogPost
 
 
 @pytest.fixture(scope="session")
@@ -19,8 +21,9 @@ def app():
         DBC.create_engine()
         DBC.create_db_session()
         DBC.init_db()
-        create_test_data()
 
+    with app.app_context():
+        create_test_data()
     yield app
     os.close(db_fd)
     os.unlink(db_path)
@@ -54,9 +57,7 @@ def auth(client):
 
 
 def create_test_data():
-    from ft_app.models import User, BodyWeightRecord, BlogPost
-
-    db_session = DBC.db_session
+    db_session = DBC.get_db_session()
     db_session.add(User(username="test_1234", password="test_1234", email="test_1234@gmail.com", is_moderator=True))
     db_session.add(User(username="user_1234", password="user_1234", email="user@gmail.com"))
 

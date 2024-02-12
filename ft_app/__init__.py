@@ -3,8 +3,6 @@ import os
 from flask import Flask, render_template
 from ft_app.dbc.database import DBC
 
-db_session = DBC.db_session
-
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -60,7 +58,10 @@ def create_app(test_config=None):
 def populate_dbc():
     from ft_app.dbc.database import DBC
     from ft_app.models import User, BodyWeightRecord, BlogPost
-    if not User.query.all():
+
+    db_session = DBC.get_db_session()
+
+    if not db_session.query(User).all():
         db_session.add(User(username="adrian", password="1234567", email="ceo@gmail.com", is_moderator=True))
         db_session.add(User(username="ganesh", password="ganesh", email="ganesh@gmail.com"))
 

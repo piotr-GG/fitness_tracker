@@ -1,7 +1,5 @@
-from ft_app.dbc.database import DBC
+from ft_app import DBC
 from ft_app.models import User
-
-db_session = DBC.db_session
 
 
 def test_register(client, app):
@@ -15,5 +13,6 @@ def test_register(client, app):
     assert response.headers["Location"] == "/auth/login"
 
     with app.app_context():
+        db_session = DBC.get_db_session()
         q = db_session.query(User).filter(User.username == "new_user_123")
         assert db_session.execute(db_session.query(q.exists()))
