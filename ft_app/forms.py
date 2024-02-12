@@ -4,7 +4,7 @@ from datetime import date
 from wtforms import Form, StringField, PasswordField, validators
 from wtforms.fields.datetime import DateField
 from wtforms.fields.numeric import DecimalField
-from wtforms.validators import ValidationError, StopValidation
+from wtforms.validators import StopValidation
 
 
 # TODO: Create new dir for forms only and separate custom validators into another Python module

@@ -1,10 +1,10 @@
 from datetime import datetime
 
-from flask import Blueprint, redirect, render_template, request, flash, session, url_for
+from flask import Blueprint, redirect, render_template, request, flash, session, url_for, g
 
+from ft_app import DBC
 from ft_app.auth import login_required
 from ft_app.forms import BlogPostCreateForm
-from ft_app.dbc.database import db_session
 from ft_app.dbc.queries import get_all_posts, get_post_by_id
 from ft_app.models import BlogPost
 
@@ -29,8 +29,10 @@ def create():
                 body=request.form["body"],
                 user_id=session.get('user_id')
             )
+            db_session = DBC.get_db_session()
             db_session.add(new_blog_post)
             db_session.commit()
+
             flash("New blog post has been successfully created!")
             return redirect(url_for('blog.index'))
         else:
@@ -57,6 +59,8 @@ def update(post_id):
         blog_post.title = title
         blog_post.body = body
         blog_post.last_edited = datetime.strptime(str(datetime.utcnow().date()), "%Y-%m-%d").date()
+
+        db_session = DBC.get_db_session()
         db_session.commit()
         return redirect(url_for('blog.index'))
 
@@ -67,7 +71,7 @@ def update(post_id):
 @login_required
 def delete(post_id):
     post = get_post_by_id(post_id)
-    db_session.delete(post)
-    db_session.commit()
+    g.db_session.delete(post)
+    g.db_session.commit()
     flash("Your post has been successfully deleted!")
     return redirect(url_for("blog.index"))

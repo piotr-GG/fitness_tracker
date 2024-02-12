@@ -8,7 +8,6 @@ from ft_app.auth import login_required
 from ft_app.forms import BodyWeightRecordForm
 from ft_app.dbc.queries import get_bw_records_by_id
 from ft_app.models import BodyWeightRecord
-from ft_app.dbc.database import db_session
 from bokeh.plotting import figure
 from bokeh.embed import json_item
 
@@ -29,8 +28,8 @@ def index():
                     flash("There is already body weight record for given date!")
                     return redirect('/bw_tracker')
 
-            db_session.add(bw_record)
-            db_session.commit()
+            g.db_session.add(bw_record)
+            g.db_session.commit()
             flash("Body weight record has been properly added!")
             return redirect('/bw_tracker')
         else:

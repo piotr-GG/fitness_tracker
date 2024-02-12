@@ -2,13 +2,31 @@ from flask import current_app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker, declarative_base
 
-engine = create_engine(f"sqlite:///{current_app.config['DATABASE']}")
-db_session = scoped_session(sessionmaker(autocommit=False,
-                                         autoflush=False,
-                                         bind=engine))
-
 Base = declarative_base()
 
 
-def init_db():
-    Base.metadata.create_all(bind=engine)
+class DBC:
+    _engine = None
+    _db_session = None
+
+    @staticmethod
+    def create_engine():
+        DBC._engine = create_engine(f"sqlite:///{current_app.config['DATABASE']}")
+
+    @staticmethod
+    def create_db_session():
+        DBC._db_session = scoped_session(sessionmaker(autocommit=False,
+                                                      autoflush=False,
+                                                      bind=DBC._engine))
+
+    @staticmethod
+    def init_db():
+        # noinspection PyUnresolvedReferences
+        import ft_app.models
+        DBC.create_engine()
+        DBC.create_db_session()
+        Base.metadata.create_all(bind=DBC._engine)
+
+    @staticmethod
+    def get_db_session():
+        return DBC._db_session

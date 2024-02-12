@@ -1,6 +1,7 @@
 import datetime
 import os
 from flask import Flask, render_template
+from ft_app.dbc.database import DBC
 
 
 def create_app(test_config=None):
@@ -20,8 +21,7 @@ def create_app(test_config=None):
         pass
 
     with app.app_context():
-        from ft_app.dbc.database import init_db
-        init_db()
+        DBC.init_db()
 
     if not app.config.get("TESTING"):
         populate_dbc()
@@ -56,9 +56,12 @@ def create_app(test_config=None):
 
 
 def populate_dbc():
-    from ft_app.dbc.database import db_session
+    from ft_app.dbc.database import DBC
     from ft_app.models import User, BodyWeightRecord, BlogPost
-    if not User.query.all():
+
+    db_session = DBC.get_db_session()
+
+    if not db_session.query(User).all():
         db_session.add(User(username="adrian", password="1234567", email="ceo@gmail.com", is_moderator=True))
         db_session.add(User(username="ganesh", password="ganesh", email="ganesh@gmail.com"))
 
