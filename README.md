@@ -1,4 +1,5 @@
-<h2>Project description</h2>
+## Project description
+
 The purpose of this project is to create a fitness webapp that would have the following functionalities:
 - **Body weight tracker** - provides functionality to plot the user's body weight in given period of time
 - **Exercises database** - used as a database for different exercises with groupings by muscles exercises, exercise destination (burn fat, build muscle etc.)
@@ -14,7 +15,6 @@ App will use following technologies:
 - **pandas** - for reading/writing data from Excel spreadsheet
 - **bokeh** - for plotting
 - **flasksqlalchemy / sqlalchemy** - for DBC ORM
-- **PyQt** - for GUI creation
 - **pytest** - for testing
 
 
