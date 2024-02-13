@@ -1,5 +1,7 @@
 import datetime
 import os
+import random
+
 from flask import Flask, render_template
 from ft_app.dbc.database import DBC
 
@@ -62,26 +64,39 @@ def populate_dbc():
     db_session = DBC.get_db_session()
 
     if not db_session.query(User).all():
-        db_session.add(User(username="adrian", password="1234567", email="ceo@gmail.com", is_moderator=True))
+        db_session.add(User(username="admin_123", password="admin_123", email="admin_123@ft.com", is_moderator=True))
         db_session.add(User(username="ganesh", password="ganesh", email="ganesh@gmail.com"))
+        db_session.add(User(username="adrian_123", password="adrian_123", email="adrian_123@gmail.com"))
+        db_session.add(User(username="pavel_kettlebell",
+                            password="kettlebell",
+                            email="pavel_kettle@kettlebell.org.com"))
 
-        db_session.add(BodyWeightRecord(weight=90.5, date="2023-01-01", user_id=1))
-        db_session.add(BodyWeightRecord(weight=91.2, date="2023-01-02", user_id=1))
-        db_session.add(BodyWeightRecord(weight=92.5, date="2023-01-03", user_id=1))
-        db_session.add(BodyWeightRecord(weight=95.5, date="2023-01-04", user_id=1))
+        for i in range(1, 15):
+            db_session.add(BodyWeightRecord(weight=random.randrange(900, 950) / 10.0,
+                                            date=f"2023-02-{str(i).zfill(2)}",
+                                            user_id=1))
 
-        db_session.add(BodyWeightRecord(weight=68.5, date="2023-02-01", user_id=2))
-        db_session.add(BodyWeightRecord(weight=71.2, date="2023-02-02", user_id=2))
-        db_session.add(BodyWeightRecord(weight=65.5, date="2023-02-03", user_id=2))
-        db_session.add(BodyWeightRecord(weight=67.5, date="2023-02-04", user_id=2))
+            db_session.add(BodyWeightRecord(weight=random.randrange(700, 730) / 10.0,
+                                            date=f"2023-02-{str(i).zfill(2)}",
+                                            user_id=2))
 
-        db_session.add(BlogPost(date=datetime.datetime.utcnow(),
-                                title="yyyy, eee, yyy",
-                                body="Poczekajcie, muszę pomyśleć!",
+            db_session.add(BodyWeightRecord(weight=random.randrange(820, 910) / 10.0,
+                                            date=f"2023-02-{str(i).zfill(2)}",
+                                            user_id=3))
+
+            db_session.add(BodyWeightRecord(weight=random.randrange(790, 810) / 10.0,
+                                            date=f"2023-02-{str(i).zfill(2)}",
+                                            user_id=4))
+
+        db_session.add(BlogPost(date=datetime.datetime.strptime("2024-02-01", "%Y-%m-%d"),
+                                title="Welcome to the Fitness Tracker App!",
+                                body="Hello guys! This is the first post here.\nWe will keep on working on the page "
+                                     "and provide you the best user experience possible, for now let us wait a bit.",
                                 user_id=1))
 
-        db_session.add(BlogPost(date=datetime.datetime.utcnow(),
-                                title="Jestem największym koksem",
-                                body="Jestem Szefem, ja jestem Szefem!",
-                                user_id=1))
+        db_session.add(BlogPost(date=datetime.datetime.strptime("2024-02-03", "%Y-%m-%d"),
+                                title="Kettlebells for the win!",
+                                body="Comrade! Forget those stupid barbells and other stuff.\n "
+                                     "Just grab a pair of dumbbells and get ready to some pumping iron!",
+                                user_id=4))
         db_session.commit()
