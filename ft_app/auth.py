@@ -2,6 +2,7 @@ import functools
 
 from flask import Blueprint, flash, g, redirect, request, session, url_for, render_template
 from sqlalchemy import select
+from werkzeug.exceptions import abort
 from werkzeug.security import check_password_hash
 
 from ft_app import DBC
@@ -20,6 +21,10 @@ def user_panel():
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
+
+    if session.get('user_id') is not None:
+        abort(403)
+
     if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
@@ -47,6 +52,10 @@ def login():
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm(request.form)
+
+    if session.get('user_id') is not None:
+        abort(403)
+
     if request.method == "POST":
         if form.validate():
             new_user = User(username=request.form['username'],

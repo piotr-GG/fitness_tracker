@@ -18,3 +18,4 @@ def test_blog_index(client, auth):
 def test_login_required(client, path):
     response = client.post(path)
     assert response.headers["Location"] == "/auth/login"
+

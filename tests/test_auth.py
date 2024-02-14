@@ -74,7 +74,11 @@ def test_register_validate_input(client, username, password, email, message):
     assert message in response.data
 
 
-@pytest.mark.skip(reason="TO BE IMPLEMENTED")
 def test_login_while_logged_in(client, auth):
     auth.login()
-    assert client.get('/auth/login').status_code == 421
+    assert client.get('/auth/login').status_code == 403
+
+
+def test_register_while_logged_in(client, auth):
+    auth.login()
+    assert client.get('/auth/register').status_code == 403
