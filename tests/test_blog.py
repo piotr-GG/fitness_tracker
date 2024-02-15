@@ -44,3 +44,23 @@ def test_create(client, auth, app):
 def test_create_not_moderator(client, auth, app):
     auth.login(username="user_1234", password="user_1234")
     assert client.get('/blog/create').status_code == 403
+
+
+@pytest.mark.skip(reason="To be implemented")
+def test_update(client, auth):
+    assert False
+
+
+@pytest.mark.skip(reason="To be implemented")
+def test_delete(client, auth):
+    assert False
+
+
+@pytest.mark.skip(reason="To be implemented")
+def test_create_validate_form(client, auth):
+    assert False
+
+
+@pytest.mark.skip(reason="To be implemented")
+def test_update_validate_form(client, auth):
+    assert False
