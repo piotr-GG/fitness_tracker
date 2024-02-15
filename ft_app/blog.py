@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from flask import Blueprint, redirect, render_template, request, flash, session, url_for, g
+from werkzeug.exceptions import abort
 
 from ft_app import DBC
 from ft_app.auth import login_required
@@ -21,6 +22,9 @@ def index():
 @login_required
 def create():
     form = BlogPostCreateForm(request.form)
+    if not g.user.is_moderator:
+        abort(403)
+
     if request.method == "POST":
         if form.validate():
             new_blog_post = BlogPost(
