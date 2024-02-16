@@ -75,7 +75,8 @@ def update(post_id):
 @login_required
 def delete(post_id):
     post = get_post_by_id(post_id)
-    g.db_session.delete(post)
-    g.db_session.commit()
+    db_session = DBC.get_db_session()
+    db_session.delete(post)
+    db_session.commit()
     flash("Your post has been successfully deleted!")
     return redirect(url_for("blog.index"))
