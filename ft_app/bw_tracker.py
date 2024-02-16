@@ -4,6 +4,7 @@ from flask import (
     Blueprint, flash, redirect, render_template, request, url_for, g
 )
 
+from ft_app import DBC
 from ft_app.auth import login_required
 from ft_app.forms import BodyWeightRecordForm
 from ft_app.dbc.queries import get_bw_records_by_id
@@ -29,8 +30,9 @@ def index():
                     flash("There is already body weight record for given date!")
                     return redirect('/bw_tracker')
 
-            g.db_session.add(bw_record)
-            g.db_session.commit()
+            db_session = DBC.get_db_session()
+            db_session.add(bw_record)
+            db_session.commit()
             flash("Body weight record has been properly added!")
             return redirect('/bw_tracker')
         else:
