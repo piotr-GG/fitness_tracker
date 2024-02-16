@@ -14,6 +14,7 @@ from bokeh.embed import json_item
 bp = Blueprint("bw_tracker", __name__, url_prefix="/bw_tracker")
 
 
+@login_required
 @bp.route('/', methods=['POST', 'GET'])
 def index():
     form = BodyWeightRecordForm(request.form)
