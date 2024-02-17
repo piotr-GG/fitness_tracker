@@ -1,4 +1,5 @@
 import datetime
+import math
 
 import pytest
 from sqlalchemy import select
@@ -40,7 +41,31 @@ def test_delete_bw_record(app, client, auth):
 
 
 def test_update_bw_record(app, client, auth):
-    pass
+    auth.login()
+    response = client.post('bw_tracker/update/1',
+                           data={
+                               "weight": 75
+                           })
+    assert response.headers["Location"] == "/bw_tracker/"
+    db_session = DBC.get_db_session()
+    result = db_session.scalars(select(BodyWeightRecord).where(BodyWeightRecord.id == 1)).one()
+    assert result.weight == 75
+
+
+@pytest.mark.parametrize('weight', (
+        29.99,
+        200.1
+))
+def test_update_bw_record_validation_failed(app, client, auth, weight):
+    auth.login()
+    response = client.post('bw_tracker/update/1',
+                           data={
+                               "weight": weight
+                           })
+    # assert response.headers["Location"] == "/bw_tracker/update"
+    db_session = DBC.get_db_session()
+    result = db_session.scalars(select(BodyWeightRecord).where(BodyWeightRecord.id == 1)).one()
+    assert math.isclose(result.weight, weight)
 
 
 @pytest.mark.parametrize('path', (
