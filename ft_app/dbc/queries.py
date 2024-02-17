@@ -39,6 +39,11 @@ def get_post_by_id(post_id):
     return db_session.scalars(select(BlogPost).where(BlogPost.id == post_id)).one()
 
 
+def get_bw_record_by_id(bw_record_id):
+    db_session = DBC.get_db_session()
+    return db_session.scalars(select(BodyWeightRecord).where(BodyWeightRecord.id == bw_record_id)).one()
+
+
 def get_bw_records_by_id(user_id):
     db_session = DBC.get_db_session()
     return (db_session.scalars(

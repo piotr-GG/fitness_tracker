@@ -1,6 +1,7 @@
 import datetime
 
 import pytest
+from sqlalchemy import select
 
 from ft_app import DBC
 from ft_app.models import BodyWeightRecord
@@ -27,9 +28,15 @@ def test_create_bw_record_validation_failed(app, auth, date):
     assert False
 
 
-@pytest.mark.skip(reason="TO BE IMPLEMENTED")
-def test_delete_bw_record(app, auth):
-    assert False
+def test_delete_bw_record(app, client, auth):
+    auth.login()
+    response = client.post('bw_tracker/delete/1')
+    assert response.headers["Location"] == "/bw_tracker/"
+
+    db_session = DBC.get_db_session()
+    result = db_session.execute(select(BodyWeightRecord).where(BodyWeightRecord.id == 1))
+    with pytest.raises(StopIteration):
+        next(result.__iter__())
 
 
 @pytest.mark.parametrize('path', (
@@ -41,9 +48,10 @@ def test_login_required(app, client, path):
     assert response.headers["Location"] == "/auth/login"
 
 
-@pytest.mark.skip(reason="TO BE IMPLEMENTED")
-def test_delete_bw_record_other_than_yours(app, auth):
-    assert False
+def test_delete_bw_record_other_than_yours(app, auth, client):
+    auth.login()
+    response = client.post('bw_tracker/delete/5')
+    assert response.status_code == 403
 
 
 @pytest.mark.skip(reason="TO BE IMPLEMENTED")

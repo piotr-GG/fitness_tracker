@@ -3,11 +3,12 @@ import json
 from flask import (
     Blueprint, flash, redirect, render_template, request, url_for, g
 )
+from werkzeug.exceptions import abort
 
 from ft_app import DBC
 from ft_app.auth import login_required
 from ft_app.forms import BodyWeightRecordForm
-from ft_app.dbc.queries import get_bw_records_by_id
+from ft_app.dbc.queries import get_bw_records_by_id, get_bw_record_by_id
 from ft_app.models import BodyWeightRecord
 from bokeh.plotting import figure
 from bokeh.embed import json_item
@@ -50,6 +51,20 @@ def index():
         else:
             flash("You need to be logged in in order to use BodyWeightTracker")
             return redirect(url_for("auth.login"))
+
+
+@bp.route('/delete/<int:bw_id>', methods=["GET", "POST"])
+@login_required
+def delete(bw_id):
+    bw_record = get_bw_record_by_id(bw_id)
+    if bw_record.user.id != g.user.id:
+        abort(403, "Operation is forbidden. Reason: Attempting to delete record that does not belong to current user.")
+
+    db_session = DBC.get_db_session()
+    db_session.delete(bw_record)
+    db_session.commit()
+    flash("Bodyweight record has been successfully deleted!")
+    return redirect(url_for("bw_tracker.index"))
 
 
 def make_plot(x, y):
