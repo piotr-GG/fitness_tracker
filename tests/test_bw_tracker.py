@@ -39,6 +39,10 @@ def test_delete_bw_record(app, client, auth):
         next(result.__iter__())
 
 
+def test_update_bw_record(app, client, auth):
+    pass
+
+
 @pytest.mark.parametrize('path', (
         '/bw_tracker/',
         # '/bw_tracker/plot/'
