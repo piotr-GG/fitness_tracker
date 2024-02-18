@@ -29,17 +29,6 @@ def test_create_bw_record_validation_failed(app, auth, date):
     assert False
 
 
-def test_delete_bw_record(app, client, auth):
-    auth.login()
-    response = client.post('bw_tracker/delete/1')
-    assert response.headers["Location"] == "/bw_tracker/"
-
-    db_session = DBC.get_db_session()
-    result = db_session.execute(select(BodyWeightRecord).where(BodyWeightRecord.id == 1))
-    with pytest.raises(StopIteration):
-        next(result.__iter__())
-
-
 def test_update_bw_record(app, client, auth):
     auth.login()
     response = client.post('bw_tracker/update/1',
@@ -53,8 +42,8 @@ def test_update_bw_record(app, client, auth):
 
 
 @pytest.mark.parametrize('weight', (
-        29.99,
-        200.1
+        24.99,
+        205.1
 ))
 def test_update_bw_record_validation_failed(app, client, auth, weight):
     auth.login()
@@ -81,6 +70,17 @@ def test_delete_bw_record_other_than_yours(app, auth, client):
     auth.login()
     response = client.post('bw_tracker/delete/5')
     assert response.status_code == 403
+
+
+def test_delete_bw_record(app, client, auth):
+    auth.login()
+    response = client.post('bw_tracker/delete/1')
+    assert response.headers["Location"] == "/bw_tracker/"
+
+    db_session = DBC.get_db_session()
+    result = db_session.execute(select(BodyWeightRecord).where(BodyWeightRecord.id == 1))
+    with pytest.raises(StopIteration):
+        next(result.__iter__())
 
 
 @pytest.mark.skip(reason="TO BE IMPLEMENTED")
