@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from flask import Blueprint, redirect, render_template, request, flash, session, url_for, g
+from werkzeug.exceptions import abort
 
 from ft_app import DBC
 from ft_app.auth import login_required
@@ -21,6 +22,9 @@ def index():
 @login_required
 def create():
     form = BlogPostCreateForm(request.form)
+    if not g.user.is_moderator:
+        abort(403)
+
     if request.method == "POST":
         if form.validate():
             new_blog_post = BlogPost(
@@ -53,17 +57,21 @@ def update(post_id):
     form.body.data = blog_post.body
 
     if request.method == "POST":
-        title = request.form["title"]
-        body = request.form["body"]
+        form.title.data = request.form["title"]
+        form.body.data = request.form["body"]
+        if form.validate():
+            blog_post.title = form.title.data
+            blog_post.body = form.body.data
+            blog_post.last_edited = datetime.strptime(str(datetime.utcnow().date()), "%Y-%m-%d").date()
 
-        blog_post.title = title
-        blog_post.body = body
-        blog_post.last_edited = datetime.strptime(str(datetime.utcnow().date()), "%Y-%m-%d").date()
-
-        db_session = DBC.get_db_session()
-        db_session.commit()
-        return redirect(url_for('blog.index'))
-
+            db_session = DBC.get_db_session()
+            db_session.commit()
+            return redirect(url_for('blog.index'))
+        else:
+            msg = form.print_error_message()
+            flash(r"There were errors during updating the blog post. Please correct them.")
+            for m in msg:
+                flash(m)
     return render_template("blog/update.html", form=form)
 
 
@@ -71,7 +79,8 @@ def update(post_id):
 @login_required
 def delete(post_id):
     post = get_post_by_id(post_id)
-    g.db_session.delete(post)
-    g.db_session.commit()
+    db_session = DBC.get_db_session()
+    db_session.delete(post)
+    db_session.commit()
     flash("Your post has been successfully deleted!")
     return redirect(url_for("blog.index"))

@@ -8,7 +8,7 @@ from ft_app.dbc.database import DBC
 from ft_app.models import User, BodyWeightRecord, BlogPost
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def app():
     db_fd, db_path = tempfile.mkstemp()
 
@@ -47,6 +47,9 @@ class AuthActions:
             data={'username': username,
                   'password': password}
         )
+
+    def logout(self):
+        return self._client.get('/auth/logout')
 
 
 @pytest.fixture

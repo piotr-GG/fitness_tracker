@@ -73,19 +73,19 @@ def populate_dbc():
 
         for i in range(1, 15):
             db_session.add(BodyWeightRecord(weight=random.randrange(900, 950) / 10.0,
-                                            date=f"2023-02-{str(i).zfill(2)}",
+                                            date=f"2024-02-{str(i).zfill(2)}",
                                             user_id=1))
 
             db_session.add(BodyWeightRecord(weight=random.randrange(700, 730) / 10.0,
-                                            date=f"2023-02-{str(i).zfill(2)}",
+                                            date=f"2024-02-{str(i).zfill(2)}",
                                             user_id=2))
 
             db_session.add(BodyWeightRecord(weight=random.randrange(820, 910) / 10.0,
-                                            date=f"2023-02-{str(i).zfill(2)}",
+                                            date=f"2024-02-{str(i).zfill(2)}",
                                             user_id=3))
 
             db_session.add(BodyWeightRecord(weight=random.randrange(790, 810) / 10.0,
-                                            date=f"2023-02-{str(i).zfill(2)}",
+                                            date=f"2024-02-{str(i).zfill(2)}",
                                             user_id=4))
 
         db_session.add(BlogPost(date=datetime.datetime.strptime("2024-02-01", "%Y-%m-%d"),

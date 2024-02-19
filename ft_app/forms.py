@@ -35,11 +35,11 @@ class FormErrorPrinter(Form):
 class RegistrationForm(FormErrorPrinter):
     username = StringField('Username', validators=[validators.Length(min=4, max=25)])
     email = StringField('Email Address', validators=[
-        validators.Length(min=6, max=35),
+        validators.Length(min=8, max=35),
         validators.Email(message="Provided e-mail is not a valid e-mail address", check_deliverability=False)])
     password = PasswordField('New Password', validators=[
         validators.DataRequired(),
-        validators.Length(min=6, max=15, message="Password must be between 6 and 15 characters long."),
+        validators.Length(min=6, max=25, message="Password must be between 6 and 25 characters long."),
         validators.EqualTo('confirm_pass', message="Passwords must match!")
     ])
     confirm_pass = PasswordField('Repeat Password')
@@ -66,6 +66,7 @@ class BlogPostCreateForm(FormErrorPrinter):
 class BodyWeightRecordForm(FormErrorPrinter):
     date = DateField('Date',
                      default=date.today(),
-                     validators=[validate_date_not_in_future])
+                     validators=[validators.DataRequired(),
+                                 validate_date_not_in_future])
     weight = DecimalField('Weight',
                           validators=[validators.DataRequired(), validate_bw_record])

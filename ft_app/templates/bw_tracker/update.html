@@ -41,31 +41,29 @@
             <th>Action</th>
          </tr>
          {% for record in records %}
-            <tr>
-               <td>{{ record.date.date() }}</td>
-               <td>{{ record.weight }}</td>
-               <td>
-                  <a href="/bw_tracker/delete/{{record.id}}">Delete</a>
-                  <br>
-                  <a href="/bw_tracker/update/{{record.id}}">Update</a>
-               </td>
-            </tr>
+                {% if record.id == given_id %}
+                <tr>
+                    <form method="post">
+                        <td><div>{{ form.date() }}</div></td>
+                        <td><div>{{ form.weight() }}</div></td>
+                        <td>
+                        <input type="submit" value="Update">
+                    </form>
+                </tr>
+                   {% else %}
+                        <tr>
+                           <td>{{ record.date.date() }}</td>
+                           <td>{{ record.weight }}</td>
+                           <td>
+                              <a href="/bw_tracker/delete/{{record.id}}">Delete</a>
+                              <br>
+                              <a href="/bw_tracker/update/{{record.id}}">Update</a>
+                           </td>
+                        </tr>
+                   {% endif %}
          {% endfor %}
       </table>
    {% endif %}
-   <div class="form">
-      <form method="post">
-         <div> {{ form.date.label }} : {{ form.date() }}</div>
-         <div> {{ form.weight.label }} : {{ form.weight() }}</div>
-         <input type="submit" value="Add record">
-      </form>
-   </div>
-   <div id="myplot"></div>
 
 </div>
-<script>
-fetch('/bw_tracker/plot')
- .then(function(response) { return response.json(); })
- .then(function(item) { return Bokeh.embed.embed_item(item); })
-</script>
 {% endblock %}
