@@ -56,11 +56,8 @@ def index():
 @bp.route('/update/<int:bw_id>', methods=["GET", "POST"])
 @login_required
 def update(bw_id):
-    bw_record_to_be_updated = get_bw_record_by_id(bw_id)
-
     form = BodyWeightRecordForm(request.form)
-    form.date.render_kw = {'disabled': 'disabled'}
-    form.weight.data = bw_record_to_be_updated.weight
+    bw_record_to_be_updated = get_bw_record_by_id(bw_id)
 
     if request.method == "POST":
         if form.validate():
@@ -75,6 +72,8 @@ def update(bw_id):
             for m in msg:
                 flash(m)
 
+    form.date.render_kw = {'disabled': 'disabled'}
+    form.weight.data = bw_record_to_be_updated.weight
     bw_records = get_bw_records_by_id(g.user.id)
     return render_template('bw_tracker/update.html',
                            records=bw_records,

@@ -43,7 +43,7 @@ def test_update_bw_record(app, client, auth):
 
 @pytest.mark.parametrize('weight', (
         24.99,
-        205.1
+        200.1
 ))
 def test_update_bw_record_validation_failed(app, client, auth, weight):
     auth.login()
@@ -51,10 +51,9 @@ def test_update_bw_record_validation_failed(app, client, auth, weight):
                            data={
                                "weight": weight
                            })
-    # assert response.headers["Location"] == "/bw_tracker/update"
     db_session = DBC.get_db_session()
     result = db_session.scalars(select(BodyWeightRecord).where(BodyWeightRecord.id == 1)).one()
-    assert math.isclose(result.weight, weight)
+    assert not math.isclose(result.weight, weight)
 
 
 @pytest.mark.parametrize('path', (
