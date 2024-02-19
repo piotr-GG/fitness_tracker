@@ -21,6 +21,29 @@ def test_register(client, app):
         assert db_session.execute(db_session.query(q.exists()))
 
 
+@pytest.mark.parametrize(('username', 'email'), (
+        ('user_1234', 'different@email.com'),
+        ('diff_user', 'user@gmail.com'),
+        ('user_1234', 'user@gmail.com')
+))
+def test_register_already_exists(client, app, username, email):
+    assert client.get('/auth/register').status_code == 200
+    client.post('/auth/register', data={
+        'username': username,
+        'password': 'different_password',
+        'confirm_pass': 'different_password',
+        'email': email
+    })
+
+    with app.app_context():
+        db_session = DBC.get_db_session()
+        q = db_session.query(User).filter(User.username == "user_1234")
+        result = db_session.scalars(q).all()
+        assert len(result) == 1
+        user = result[0]
+        assert user.id == 2
+
+
 def test_login(client, app):
     assert client.get('/auth/login').status_code == 200
     response = client.post('/auth/login', data={
@@ -56,22 +79,22 @@ def test_logout(client, auth):
         assert session.get('user_id', None) is None
 
 
-@pytest.mark.skip(reason="TO BE IMPLEMENTED")
-@pytest.mark.parametrize(('username', 'password', 'email', 'message'), (
-        ('', '', '', b"TO BE FILLED"),
-        ('testing_101', '', '', b"TO BE FILLED"),
-        ('test_1234', 'test_1234', "test_1234@gmail.com", b"TO BE FILLED"),
-        ('test_XYZ', 'test_XYZ', "test_1234@gmail.com", b"TO BE FILLED")
-))
-def test_register_validate_input(client, username, password, email, message):
-    response = client.post(
-        '/auth/register',
-        data={
-            'username': username,
-            'password': password,
-            'email': email
-        })
-    assert message in response.data
+# @pytest.mark.skip(reason="TO BE IMPLEMENTED")
+# @pytest.mark.parametrize(('username', 'password', 'email', 'message'), (
+#         ('', '', '', b"TO BE FILLED"),
+#         ('testing_101', '', '', b"TO BE FILLED"),
+#         ('test_1234', 'test_1234', "test_1234@gmail.com", b"TO BE FILLED"),
+#         ('test_XYZ', 'test_XYZ', "test_1234@gmail.com", b"TO BE FILLED")
+# ))
+# def test_register_validate_input(client, username, password, email, message):
+#     response = client.post(
+#         '/auth/register',
+#         data={
+#             'username': username,
+#             'password': password,
+#             'email': email
+#         })
+#     assert message in response.data
 
 
 def test_login_while_logged_in(client, auth):

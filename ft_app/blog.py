@@ -57,17 +57,21 @@ def update(post_id):
     form.body.data = blog_post.body
 
     if request.method == "POST":
-        title = request.form["title"]
-        body = request.form["body"]
+        form.title.data = request.form["title"]
+        form.body.data = request.form["body"]
+        if form.validate():
+            blog_post.title = form.title.data
+            blog_post.body = form.body.data
+            blog_post.last_edited = datetime.strptime(str(datetime.utcnow().date()), "%Y-%m-%d").date()
 
-        blog_post.title = title
-        blog_post.body = body
-        blog_post.last_edited = datetime.strptime(str(datetime.utcnow().date()), "%Y-%m-%d").date()
-
-        db_session = DBC.get_db_session()
-        db_session.commit()
-        return redirect(url_for('blog.index'))
-
+            db_session = DBC.get_db_session()
+            db_session.commit()
+            return redirect(url_for('blog.index'))
+        else:
+            msg = form.print_error_message()
+            flash(r"There were errors during updating the blog post. Please correct them.")
+            for m in msg:
+                flash(m)
     return render_template("blog/update.html", form=form)
 
 

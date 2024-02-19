@@ -20,13 +20,25 @@ def test_create_bw_record(app, client, auth):
     assert result.weight == 66 and result.date.date() == datetime.date(2024, 2, 16)
 
 
-@pytest.mark.skip(reason="TO BE IMPLEMENTED")
-@pytest.mark.parametrize('date', (
-        '/bw_tracker/',
-        # '/bw_tracker/plot/'
+@pytest.mark.parametrize(('date', 'weight'), (
+        (datetime.date.today(), 25),
+        (datetime.date.today(), 205),
+        (datetime.date.today() + datetime.timedelta(days=2), 35),
+        (datetime.date.today() + datetime.timedelta(days=2), 198),
+        (datetime.date.today() + datetime.timedelta(days=2), 29.99),
+        (datetime.date.today() + datetime.timedelta(days=2), 199.99)
 ))
-def test_create_bw_record_validation_failed(app, auth, date):
-    assert False
+def test_create_bw_record_validation_failed(app, client, auth, date, weight):
+    auth.login()
+    assert client.get("/bw_tracker/").status_code == 200
+    client.post('/bw_tracker/', data={
+        "weight": weight,
+        "date": date
+    })
+    db_session = DBC.get_db_session()
+    result = db_session.scalars(db_session.query(BodyWeightRecord).order_by(BodyWeightRecord.id))
+    last_record = result.all()[-1]
+    assert last_record.weight != weight and last_record.date.date() != date
 
 
 def test_update_bw_record(app, client, auth):
@@ -47,10 +59,10 @@ def test_update_bw_record(app, client, auth):
 ))
 def test_update_bw_record_validation_failed(app, client, auth, weight):
     auth.login()
-    response = client.post('bw_tracker/update/1',
-                           data={
-                               "weight": weight
-                           })
+    client.post('bw_tracker/update/1',
+                data={
+                    "weight": weight
+                })
     db_session = DBC.get_db_session()
     result = db_session.scalars(select(BodyWeightRecord).where(BodyWeightRecord.id == 1)).one()
     assert not math.isclose(result.weight, weight)
@@ -82,6 +94,6 @@ def test_delete_bw_record(app, client, auth):
         next(result.__iter__())
 
 
-@pytest.mark.skip(reason="TO BE IMPLEMENTED")
-def test_plot(app, auth):
-    assert False
+# @pytest.mark.skip(reason="TO BE IMPLEMENTED")
+# def test_plot(app, auth):
+#     assert False
