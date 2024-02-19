@@ -73,6 +73,7 @@ def update(bw_id):
                 flash(m)
 
     form.date.render_kw = {'disabled': 'disabled'}
+    form.date.data = bw_record_to_be_updated.date
     form.weight.data = bw_record_to_be_updated.weight
     bw_records = get_bw_records_by_id(g.user.id)
     return render_template('bw_tracker/update.html',
