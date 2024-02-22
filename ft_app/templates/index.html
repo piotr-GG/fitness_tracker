@@ -12,16 +12,23 @@
      <div class="col-lg-6 col-md-8 mx-auto">
        <h1 class="fw-light">Welcome to Fitness Tracker App!</h1>
        <p class="lead text-body-secondary">
-          {% if g.user %}
-               Hello, {{ g.user.username }}!
-          {% else %}
-               Hello, unknown user!
-          {% endif %}
+           That's the best fitness app available on the internet!<br>
+           At least that's our opinion :)
        </p>
 
        <p>
-         <a href="#" class="btn btn-primary my-2">Main call to action</a>
-         <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+           {% if g.user %}
+            Hello, {{ g.user.username }}!<br>
+            How's it going?<br>
+            Did you already work out today?<br>
+            Your shortcuts:<br>
+            <a href="{{ url_for('bw_tracker.index') }}" class="btn btn-primary my-2">Bodyweight tracker</a>
+            <a href="{{ url_for('training_planner.index') }}" class="btn btn-primary my-2">Training planner</a>
+
+          {% else %}
+            <a href="{{ url_for('auth.login') }}" class="btn btn-primary my-2">Login</a>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-secondary my-2">Create new account</a>
+          {% endif %}
        </p>
      </div>
    </div>
