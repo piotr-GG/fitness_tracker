@@ -92,7 +92,8 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = get_user_by_id(user_id)
+        if not hasattr(g, "user") or g.user is None or g.user.id != user_id:
+            g.user = get_user_by_id(user_id)
 
 
 @bp.route('/logout')
