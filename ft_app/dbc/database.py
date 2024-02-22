@@ -11,7 +11,7 @@ class DBC:
 
     @staticmethod
     def create_engine():
-        DBC._engine = create_engine(f"sqlite:///{current_app.config['DATABASE']}")
+        DBC._engine = create_engine(f"sqlite:///{current_app.config['DATABASE']}", pool_size=25, max_overflow=100)
 
     @staticmethod
     def create_db_session():
