@@ -9,11 +9,11 @@
 {% block body %}
 <main class="container">
     <div class="row g-5">
-        <h2 class="pb-4 mb-4 fst-italic border-bottom">
+        <h2 class="pb-4 mb-4 fst-italic border-bottom" style="padding-top: 2rem;">
             FT App Blog
         </h2>
         {% if g.user and g.user.is_moderator %}
-            <h2 class="pb-4 mb-4 fst-italic border-bottom">
+            <h2 class="pb-4 mb-4 fst-italic">
                 <a class="action" href="{{ url_for('blog.create') }}">New post</a>
             </h2>
         {% endif %}
@@ -47,8 +47,8 @@
         <div class="col-md-4">
           <div class="position-sticky" style="top: 2rem;">
             <div class="p-4 mb-3 bg-body-tertiary rounded">
-              <h4 class="fst-italic">About</h4>
-              <p class="mb-0">Customize this section to tell your visitors a little bit about your publication, writers, content, or something else entirely. Totally up to you.</p>
+              <h4 class="fst-italic">Fitness blog</h4>
+              <p class="mb-0">Come and learn all the news from the fitness world. Brought to you by Fitness Tracker team.</p>
             </div>
           </div>
 

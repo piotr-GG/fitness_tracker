@@ -35,7 +35,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .blog-post-meta {
   margin-bottom: 1.25rem;
-  color: #727272;
+  color: #990303;
 }
 
 .bd-placeholder-img {
@@ -113,4 +113,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .bd-mode-toggle .dropdown-menu .active .bi {
     display: block !important;
+}
+
+a {
+    color: #aaaaaa;
 }
