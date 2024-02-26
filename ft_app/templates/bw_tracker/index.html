@@ -2,15 +2,15 @@
 
 {% block head %}
 <title>TEST</title>
- <style>
-   html, body {
-     box-sizing: border-box;
-     display: flow-root;
-     height: 100%;
-     margin: 0;
-     padding: 0;
-   }
- </style>
+<!-- <style>-->
+<!--   html, body {-->
+<!--     box-sizing: border-box;-->
+<!--     display: flow-root;-->
+<!--     height: 100%;-->
+<!--     margin: 0;-->
+<!--     padding: 0;-->
+<!--   }-->
+<!-- </style>-->
 <script src="https://cdn.bokeh.org/bokeh/release/bokeh-3.3.4.min.js"
         crossorigin="anonymous"></script>
 <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.3.4.min.js"
@@ -29,9 +29,20 @@
 {% endblock %}
 
 {% block body %}
-<div class="container-fluid">
+<div class="container-fluid col-lg-8 col-md-10 col-sm-12">
    <div class="row">
+       <main>
          <h1>Body weight tracker</h1>
+         <div class="mb-3">
+            <form method="post">
+               <div class="form-label"> {{ form.date.label }}</div>
+               <div>  {{ form.date() }}</div>
+               <div class="form-label" style="margin-top:1rem;"> {{ form.weight.label }}
+               <div>{{ form.weight() }}</div>
+               <button class="btn btn-primary" type="submit" style="margin-top:1rem;">Add record</button>
+            </form>
+         </div>
+         <div id="myplot"></div>
          {% if records|length < 1 %}
             <h4>There are no body weight records so far. Please add some records first.</h4>
          {% else %}
@@ -60,18 +71,10 @@
             </table>
          </div>
          {% endif %}
-         <div class="form">
-            <form method="post">
-               <div> {{ form.date.label }} : {{ form.date() }}</div>
-               <div> {{ form.weight.label }} : {{ form.weight() }}</div>
-               <input type="submit" value="Add record">
-            </form>
-         </div>
-         <div id="myplot"></div>
-
-      </div>
+       </main>
    </div>
 </div>
+
 
 <script>
 fetch('/bw_tracker/plot')

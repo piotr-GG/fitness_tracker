@@ -97,7 +97,7 @@ def delete(bw_id):
 
 
 def make_plot(x, y):
-    p = figure(title="Body weight plot", sizing_mode="fixed", width=800, height=400, x_axis_type="datetime")
+    p = figure(title="Body weight plot", sizing_mode="scale_both", width=800, height=400, x_axis_type="datetime")
     p.xaxis.axis_label = "Date"
     p.yaxis.axis_label = "Body weight [kg]"
     p.line(x, y)
