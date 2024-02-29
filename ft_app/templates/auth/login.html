@@ -1,13 +1,31 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>{% block title %}Log In{% endblock %}</title>
+<title>{% block title %}Log In{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 {% endblock %}
 
 {% block body %}
-    <form method="post">
-        <div> {{ form.username.label }} : {{ form.username() }} </div>
-        <div> {{ form.password.label }} : {{ form.password() }} </div>
-        <input type="submit" value="Log In">
-    </form>
+<main class="form-signin w-100 m-auto">
+  <form method="post">
+    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+    <div class="form-floating">
+        <div>{{ form.username(class_="form-control", id_="floatingInput") }}</div>
+        {{ form.username.label(for_="floatingInput") }}</label>
+    </div>
+    <div class="form-floating">
+        <div>{{ form.password(class_="form-control", id_="floatingPassword") }}</div>
+        {{ form.password.label(for_="floatingPassword") }}
+    </div>
+
+    <div class="form-check text-start my-3">
+      <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">
+        Remember me
+      </label>
+    </div>
+    <button class="btn btn-primary w-100 py-2" type="submit">Log In</button>
+  </form>
+</main>
 {% endblock %}
