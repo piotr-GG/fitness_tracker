@@ -13,7 +13,18 @@ from ft_app.models import User
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('auth.login'))
+        return view(**kwargs)
+
+    return wrapped_view
+
+
 @bp.route('/user_panel', methods=['GET', 'POST'])
+@login_required
 def user_panel():
     return render_template("auth/user_panel.html")
 
@@ -100,13 +111,3 @@ def load_logged_in_user():
 def logout():
     session.clear()
     return redirect((url_for('index')))
-
-
-def login_required(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        if g.user is None:
-            return redirect(url_for('auth.login'))
-        return view(**kwargs)
-
-    return wrapped_view
