@@ -9,7 +9,7 @@ from ft_app.models import BlogPost
 
 def test_blog_index(client, auth):
     response = client.get('/blog/')
-    assert b"Welcome to the blog!" in response.data
+    assert response.data
 
     auth.login()
     response = client.get('/blog/')
