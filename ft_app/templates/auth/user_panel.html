@@ -1,19 +1,17 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <title>{% block title %}User panel{% endblock %}</title>
+<title>{% block title %}User panel{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/userpanel.css') }}">
 {% endblock %}
 
 {% block body %}
     <ul>
-        <h1>User panel options!</h1>
-        {% if g.user %}
-        <li>User panel 101</li>
-        <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
-        <li>Have fun and all good stuff</li>
-        {% else %}
-        <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
-        <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-        {% endif %}
+        <h1>User panel</h1>
+        <div class="btn-group">
+          <a href="{{ url_for('auth.logout') }}"><button type="button" class="btn btn-sm btn-primary">Log Out</button></a>
+        </div>
+        <li>Your e-mail: </li>
+        <li>Your photo: </li>
     </ul>
 {% endblock %}

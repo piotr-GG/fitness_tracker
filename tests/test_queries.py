@@ -48,7 +48,7 @@ def test_user_exists_by_email(app, email, expected):
 ))
 def test_get_user_by_id(app, user_id, expected):
     result = get_user_by_id(user_id)
-    assert result is not None
+    assert result.id == user_id
 
 
 def test_get_all_posts(app):

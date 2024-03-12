@@ -26,7 +26,7 @@ def _user_exists_by_email(user: User):
 
 def get_user_by_id(user_id):
     db_session = DBC.get_db_session()
-    return db_session.execute(select(User).where(User.id == user_id)).fetchone().User
+    return db_session.scalars(select(User).where(User.id == user_id)).one()
 
 
 def get_all_posts():
