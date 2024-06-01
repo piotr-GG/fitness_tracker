@@ -58,9 +58,11 @@ class BlogPostCreateForm(FormErrorPrinter):
                      validators=[validators.DataRequired(),
                                  validate_date_not_in_future])
     title = StringField('Title',
-                        validators=[validators.Length(min=5, max=200)])
+                        validators=[validators.Length(min=5, max=200)],
+                        render_kw={"class": "resizable-text-title"})
     body = StringField('Body',
-                       validators=[validators.Length(min=5)])
+                       validators=[validators.Length(min=5)],
+                       render_kw={"class": "resizable-text-body"})
 
 
 class BodyWeightRecordForm(FormErrorPrinter):
