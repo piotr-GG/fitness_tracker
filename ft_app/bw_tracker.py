@@ -12,9 +12,10 @@ from ft_app.dbc.queries import get_bw_records_by_id, get_bw_record_by_id
 from ft_app.models import BodyWeightRecord
 from bokeh.plotting import figure
 from bokeh.embed import json_item
+from bokeh.io import curdoc
+from bokeh.themes import Theme
 
 bp = Blueprint("bw_tracker", __name__, url_prefix="/bw_tracker")
-
 
 @login_required
 @bp.route('/', methods=['POST', 'GET'])
