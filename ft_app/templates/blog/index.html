@@ -22,7 +22,7 @@
                                 , last edited on {{ blog_post.last_edited.strftime('%Y-%m-%d') }}
                             {% endif %}
                     </p>
-                    <p>{{ blog_post.body }}</p>
+                    <p class="preserve-whitespace">{{ blog_post.body }}</p>
                     {% if blog_post.user.id == g.user.id %}
                         <a class="btn-user" href="{{ url_for('blog.update', post_id=blog_post.id) }}">Edit</a>
                         <a class="btn-user" href="{{ url_for('blog.delete', post_id=blog_post.id) }}">Delete</a>

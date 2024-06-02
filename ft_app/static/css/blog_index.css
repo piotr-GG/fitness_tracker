@@ -117,3 +117,7 @@ h1, h2, h3, h4, h5, h6 {
     padding-left: 250px;
     padding-right: 25%;
 }
+
+.preserve-whitespace {
+    white-space: pre-line;
+}

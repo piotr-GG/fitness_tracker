@@ -1,7 +1,7 @@
 import datetime
 from datetime import date
 
-from wtforms import Form, StringField, PasswordField, validators
+from wtforms import Form, StringField, PasswordField, validators, TextAreaField
 from wtforms.fields.datetime import DateField
 from wtforms.fields.numeric import DecimalField
 from wtforms.validators import StopValidation
@@ -60,9 +60,9 @@ class BlogPostCreateForm(FormErrorPrinter):
     title = StringField('Title',
                         validators=[validators.Length(min=5, max=200)],
                         render_kw={"class": "resizable-text-title"})
-    body = StringField('Body',
-                       validators=[validators.Length(min=5)],
-                       render_kw={"class": "resizable-text-body"})
+    body = TextAreaField('Body',
+                         validators=[validators.Length(min=5)],
+                         render_kw={"class": "resizable-text-body"})
 
 
 class BodyWeightRecordForm(FormErrorPrinter):
