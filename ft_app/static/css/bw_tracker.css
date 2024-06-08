@@ -40,3 +40,64 @@
     padding-left: 250px;
     padding-right: 25%;
 }
+
+.bw_table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.bw_table th, td {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.bw_table th {
+    background-color: #f2f2f2;
+}
+
+.bw_table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.bw_table tr:hover {
+    background-color: #eaeaea;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+    .bw_table table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    .bw_table thead tr {
+        display: none;
+    }
+    .bw_table tr {
+        margin-bottom: 10px;
+    }
+    .bw_table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border: none;
+        border-bottom: 1px solid #ddd;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+    .bw_table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+.centered_table {
+    margin: 0 auto;
+    width: 75%;
+}
