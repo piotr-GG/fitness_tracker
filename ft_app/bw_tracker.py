@@ -17,6 +17,7 @@ from bokeh.themes import Theme
 
 bp = Blueprint("bw_tracker", __name__, url_prefix="/bw_tracker")
 
+
 @login_required
 @bp.route('/', methods=['POST', 'GET'])
 def index():
