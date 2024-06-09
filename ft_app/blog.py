@@ -44,7 +44,7 @@ def create():
             flash(r"There were errors during registration. Please correct them.")
             for m in msg:
                 flash(m)
-    return render_template("blog/create.html", form=form)
+    return render_template("blog/create_update.html", form=form)
 
 
 @bp.route('/<int:post_id>/update', methods=['GET', 'POST'])
@@ -72,7 +72,7 @@ def update(post_id):
             flash(r"There were errors during updating the blog post. Please correct them.")
             for m in msg:
                 flash(m)
-    return render_template("blog/update.html", form=form)
+    return render_template("blog/create_update.html", form=form)
 
 
 @bp.route('/<int:post_id>/delete', methods=['GET', 'POST'])

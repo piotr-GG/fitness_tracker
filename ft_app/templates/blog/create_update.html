@@ -1,0 +1,19 @@
+{%extends 'base.html' %}
+
+{% block head %}
+<title>Create new blog post</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom/blog_index.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="form-grid-container">
+    <div class="form-grid-item"><h2></h2><h2>Create new post</h2></div>
+    <form method="post">
+        <div class="form-grid-item"> {{ form.date.label }}{{ form.date() }} </div>
+        <div class="form-grid-item"> {{ form.title.label }}{{ form.title() }} </div>
+        <div class="form-grid-item"> {{ form.body.label }}{{ form.body() }} </div>
+        <div class="form-grid-item"> <label></label><input type="submit" value="Submit post" class="btn btn-submit"></div>
+    </form>
+</div>
+{% endblock %}

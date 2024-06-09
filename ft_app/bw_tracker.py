@@ -1,5 +1,6 @@
 import json
 
+from bokeh.models import ColumnDataSource, HoverTool
 from flask import (
     Blueprint, flash, redirect, render_template, request, url_for, g
 )
@@ -12,6 +13,8 @@ from ft_app.dbc.queries import get_bw_records_by_id, get_bw_record_by_id
 from ft_app.models import BodyWeightRecord
 from bokeh.plotting import figure
 from bokeh.embed import json_item
+from bokeh.io import curdoc
+from bokeh.themes import Theme
 
 bp = Blueprint("bw_tracker", __name__, url_prefix="/bw_tracker")
 
@@ -100,8 +103,22 @@ def make_plot(x, y):
     p = figure(title="Body weight plot", sizing_mode="scale_both", width=800, height=400, x_axis_type="datetime")
     p.xaxis.axis_label = "Date"
     p.yaxis.axis_label = "Body weight [kg]"
-    p.line(x, y)
-    p.scatter(x, y)
+    source = ColumnDataSource(data=dict(date=x, weight=y))
+
+    p.add_tools(
+        HoverTool(
+            tooltips=[
+                ("Date", "@date{%F}"),
+                ("Weight", "@weight{0.00}")
+            ],
+            formatters={
+                '@date': 'datetime',
+            },
+            mode='vline'
+        )
+    )
+    p.line(source=source, x="date", y="weight")
+    p.scatter(source=source, x="date", y="weight")
     return p
 
 

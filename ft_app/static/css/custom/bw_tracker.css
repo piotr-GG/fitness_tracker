@@ -1,0 +1,111 @@
+.form-grid-container {
+    width: 50%;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    background: #aeaeae;
+    box-shadow: 0 0 10px rga(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+.form-grid-item {
+    display: contents;
+}
+
+.form-grid-container form {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 10px;
+}
+
+.form-grid-item label {
+    grid-column: 1 / 2;
+    padding: 10px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.form-grid-item input {
+    grid-column: 2 / 2;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btn-submit {
+    box-sizing: border-box;
+    width: 50%;
+    padding-left: 250px;
+    padding-right: 25%;
+}
+
+.bw_table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.bw_table th, td {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.bw_table th {
+    background-color: #929292;
+}
+
+.bw_table tr:nth-child(even) {
+    background-color: #959595;
+}
+
+.bw_table tr:hover {
+    background-color: #eaeaea;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+    .bw_table table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    .bw_table thead tr {
+        display: none;
+    }
+    .bw_table tr {
+        margin-bottom: 10px;
+    }
+    .bw_table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border: none;
+        border-bottom: 1px solid #ddd;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+    .bw_table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+.centered_table {
+    margin: 0 auto;
+    width: 75%;
+    padding-bottom: 2rem;
+}
+
+.bw_plot{
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    width: 75%;
+}
