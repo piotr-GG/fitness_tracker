@@ -51,3 +51,4 @@ def get_bw_records_by_id(user_id):
         .where(BodyWeightRecord.user_id == user_id)
         .order_by(BodyWeightRecord.date))
             .all())
+

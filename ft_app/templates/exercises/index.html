@@ -2,48 +2,34 @@
 
 {% block head %}
 <title>Exercises</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/custom/exercises_index.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom/exercises.css') }}">
 {% endblock %}
 
 {% block body %}
-<div class="my-5">
-  <div class="p-5 text-center bg-body-tertiary">
-    <div class="container py-5">
-      <h1 class="text-body-emphasis">Exercise Knowledge Base</h1>
-      <p class="col-lg-8 mx-auto lead">
-        Here you can find all the relevant information regarding all the popular exercises. Keep on searching and you will find it!
-      </p>
+<main class="container">
+    <div class="item">
+        <img src="image1.jpg" alt="Item 1">
+        <p>Short description for item 1.</p>
     </div>
-  </div>
-</div>
-
-<form class="d-flex" role="search" style = "margin: 2rem;">
-    <input class="form-control me-2" type="search" placeholder="Search for exercises" aria-label="Search">
-    <button class="btn btn-outline-dark" type="submit">Search</button>
-</form>
-
-<main>
-  <div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
-    <div class="text-bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-      <div class="my-3 py-3">
-        <h2 class="display-5">First exercise</h2>
-        <p class="lead">Some description.</p>
-      </div>
-      <div class="bg-body-tertiary shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-          <p>Even more description goes in here.</p>
-      </div>
+    <div class="item">
+        <img src="image2.jpg" alt="Item 2">
+        <p>Short description for item 2.</p>
     </div>
-
-    <div class="text-bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-      <div class="my-3 py-3">
-        <h2 class="display-5">First exercise</h2>
-        <p class="lead">Some description.</p>
-      </div>
-      <div class="bg-body-tertiary shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-          <p>Even more description goes in here.</p>
-      </div>
+    <div class="item">
+        <img src="image3.jpg" alt="Item 3">
+        <p>Short description for item 3.</p>
     </div>
-  </div>
+    <div class="item">
+        <img src="image4.jpg" alt="Item 4">
+        <p>Short description for item 4.</p>
+    </div>
+    <div class="item">
+        <img src="image5.jpg" alt="Item 5">
+        <p>Short description for item 5.</p>
+    </div>
+    <div class="item">
+        <img src="image6.jpg" alt="Item 6">
+        <p>Short description for item 6.</p>
+    </div>
 </main>
-
 {% endblock %}
