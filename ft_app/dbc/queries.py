@@ -1,7 +1,7 @@
 from sqlalchemy import select
 
 from ft_app.dbc.database import DBC
-from ft_app.models import User, BlogPost, BodyWeightRecord
+from ft_app.models import User, BlogPost, BodyWeightRecord, Exercise
 
 
 def check_if_user_exists(user: User):
@@ -52,3 +52,13 @@ def get_bw_records_by_id(user_id):
         .order_by(BodyWeightRecord.date))
             .all())
 
+
+def get_exercises(exercise_name=""):
+    db_session = DBC.get_db_session()
+    if exercise_name != "":
+        return db_session.scalars(select(Exercise).where(Exercise.name == exercise_name)).one()
+    else:
+        return (db_session.scalars(
+            select(Exercise)
+            .order_by(Exercise.name)
+        ).all())

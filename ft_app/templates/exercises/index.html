@@ -7,29 +7,12 @@
 
 {% block body %}
 <main class="container">
+    {% for exercise in exercises %}
     <div class="item">
-        <img src="image1.jpg" alt="Item 1">
-        <p>Short description for item 1.</p>
+        <img src="{{ url_for('static', filename='img/exercises/' + exercise.image_path) }}" alt="{{ exercise.name }}" title="{{ exercise.name }}">
+        <h3>{{ exercise.name }}</h3>
+        <p>{{ exercise.description }}</p>
     </div>
-    <div class="item">
-        <img src="image2.jpg" alt="Item 2">
-        <p>Short description for item 2.</p>
-    </div>
-    <div class="item">
-        <img src="image3.jpg" alt="Item 3">
-        <p>Short description for item 3.</p>
-    </div>
-    <div class="item">
-        <img src="image4.jpg" alt="Item 4">
-        <p>Short description for item 4.</p>
-    </div>
-    <div class="item">
-        <img src="image5.jpg" alt="Item 5">
-        <p>Short description for item 5.</p>
-    </div>
-    <div class="item">
-        <img src="image6.jpg" alt="Item 6">
-        <p>Short description for item 6.</p>
-    </div>
+    {% endfor %}
 </main>
 {% endblock %}

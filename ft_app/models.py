@@ -69,3 +69,16 @@ class BlogPost(Base):
         self.title = title
         self.body = body
         self.user_id = user_id
+
+
+class Exercise(Base):
+    __tablename__ = "exercises"
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100))
+    description = Column(Text)
+    image_path = Column(String(200), default=None, nullable=True)
+
+    def __init__(self, name, description, image_path):
+        self.name = name
+        self.description = description
+        self.image_path = image_path
