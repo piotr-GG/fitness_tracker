@@ -53,11 +53,11 @@
 }
 
 .bw_table th {
-    background-color: #f2f2f2;
+    background-color: #929292;
 }
 
 .bw_table tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #959595;
 }
 
 .bw_table tr:hover {

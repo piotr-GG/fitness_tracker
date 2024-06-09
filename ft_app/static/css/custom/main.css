@@ -1,7 +1,17 @@
+:root {
+    --primary-color: #27ae60;  /* A vibrant green for energy and health */
+    --secondary-color: #2ecc71;  /* A lighter green for accents */
+    --accent-color: #e74c3c;  /* A bright red for calls to action */
+    --background-color: #ecf0f1;  /* A light gray for background */
+    --text-color: #2c3e50;  /* A dark gray for text */
+    --highlight-color: #f1c40f;  /* A yellow for highlights */
+}
+
 body{
     margin: 0;
     font-family: sans-serif;
-    background-color: green;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 .content{
@@ -30,12 +40,18 @@ td{
     width: 70%;
 }
 
+nav {
+    background-color: var(--primary-color);
+}
+footer {
+    background-color: var(--secondary-color);
+}
 ul.navbar {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333;
+  background-color: var(--primary-color);
 }
 
 li.navbar {
@@ -51,7 +67,7 @@ li a.navbar {
 }
 
 li a.navbar:hover {
-  background-color: #111;
+  background-color: var(--secondary-color);
 }
 
 ul.flashes {
