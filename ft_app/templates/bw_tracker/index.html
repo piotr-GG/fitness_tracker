@@ -22,17 +22,16 @@
 
 {% block body %}
 <div class="container-fluid col-lg-8 col-md-10 col-sm-12">
-   <div class="form-grid-container">
-         <h1>Body weight tracker</h1>
-         <div class="form-grid-item"><h3>Create new record</h3></div>
-            <form method="post">
-               <div class="form-label"> {{ form.date.label }}{{ form.date() }}</div>
-               <div class="form-label"> {{ form.weight.label }}{{ form.weight() }}</div>
-               <button class="btn btn-primary" type="submit">Add record</button>
-            </form>
-  </div>
-
-    <div id="myplot"></div>
+       <div class="form-grid-container">
+             <h1>Body weight tracker</h1>
+             <div class="form-grid-item"><h3>Create new record</h3></div>
+                <form method="post">
+                   <div class="form-label"> {{ form.date.label }}{{ form.date() }}</div>
+                   <div class="form-label" style="max-width:200px"> {{ form.weight.label }}{{ form.weight() }}</div>
+                   <button class="btn btn-primary" type="submit">Add record</button>
+                </form>
+      </div>
+    <div id="myplot" class ="bw_plot"></div>
      {% if records|length < 1 %}
         <h4>There are no body weight records so far. Please add some records first.</h4>
      {% else %}

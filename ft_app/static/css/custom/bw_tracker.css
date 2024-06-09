@@ -100,4 +100,12 @@
 .centered_table {
     margin: 0 auto;
     width: 75%;
+    padding-bottom: 2rem;
+}
+
+.bw_plot{
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    width: 75%;
 }
