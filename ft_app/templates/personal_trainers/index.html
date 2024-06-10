@@ -2,62 +2,25 @@
 
 {% block head %}
 <title>Personal Trainers</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/custom/pts_index.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom/personal_trainers.css') }}">
 {% endblock %}
 
 {% block body %}
 <main>
-  <div class="album py-5 bg-body-tertiary">
-    <div class="container">
-
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-        <div class="col">
-          <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Piotr Gałecki</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Piotr Gałecki</text></svg>
-            <div class="card-body">
-              <p class="card-text">Piotr Gałecki</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Details</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Dawid Lisiewski</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Dawid Lisiewski</text></svg>
-            <div class="card-body">
-              <p class="card-text">Dawid Lisiewski</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Details</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Ganesh Revu</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Ganesh Revu</text></svg>
-            <div class="card-body">
-              <p class="card-text">Ganesh Revu</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Details</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
+  <div class="grid-container">
+      <div class="grid-item">
+        <h3>Adrian "The King"</h3>
+        <img src="/static/img/personal_trainers/Adrian_the_king.jpg" alt="Adrian The King" title="Adrian The King">
       </div>
-    </div>
-  </div>
+      <div class="grid-item">
+          <h3>Conchita</h3>
+          <img src="/static/img/personal_trainers/Conchita.jpg" alt="Conchita" title="Conchita">
+      </div>
 
+      <div class="grid-item">
+          <h3>Ganesh Revu</h3>
+          <img src="/static/img/personal_trainers/Ganesh.jpg" alt="Ganesh Revu" title="Ganesh Revu">
+      </div>
+  </div>
 </main>
 {% endblock %}
