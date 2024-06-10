@@ -3,9 +3,14 @@
 {% block head %}
 <title>Exercises</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/custom/exercises.css') }}">
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block body %}
+<form class="d-flex" role="search" style = "margin: 1rem auto; width:60%;">
+    <input class="form-control me-2 live-search-box" type="search" placeholder="Search for any exercise here..." aria-label="Search">
+</form>
+
 <main class="container">
     {% for exercise in exercises %}
     <div class="item">
@@ -15,4 +20,23 @@
     </div>
     {% endfor %}
 </main>
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery(".live-search-box").on("keyup click", function () {
+            var value = jQuery(this).val().toLowerCase();
+            if (value == "") {
+                jQuery(".item").show()
+            } else {
+                jQuery(".item").filter(function () {
+                    jQuery(this).toggle(jQuery(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            }
+        });
+    });
+</script>
+
+
+
 {% endblock %}
