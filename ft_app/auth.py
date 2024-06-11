@@ -26,7 +26,8 @@ def login_required(view):
 @bp.route('/user_panel', methods=['GET', 'POST'])
 @login_required
 def user_panel():
-    return render_template("auth/user_panel.html")
+    return render_template("auth/user_panel.html",
+                           current_user=g.user)
 
 
 @bp.route('/login', methods=['GET', 'POST'])

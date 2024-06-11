@@ -6,12 +6,32 @@
 {% endblock %}
 
 {% block body %}
-    <ul>
-        <h1>User panel</h1>
-        <div class="btn-group">
-          <a href="{{ url_for('auth.logout') }}"><button type="button" class="btn btn-sm btn-primary">Log Out</button></a>
-        </div>
-        <li>Your e-mail: </li>
-        <li>Your photo: </li>
-    </ul>
+    <header>User panel</header>
+    <main>
+        <section class="profile">
+            <h2>User data</h2>
+            <table>
+                <tr>
+                    <td><strong>Username</strong></td>
+                    <td>{{ current_user.username }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Email</strong></td>
+                    <td>{{ current_user.email }}</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="profile-pic">
+            <h2>Profile picture</h2>
+            <img src="{{ url_for('static', filename='img/piotr_g.jpg') }}" alt="Profile picture" title="Profile picture" class="profile-pic">
+        </section>
+
+        <section class="settings">
+            <h2>Actions</h2>
+            <a href="" class="btn btn-primary my-2">Change profile picture</a>
+            <a href="" class="btn btn-primary my-2">Change password</a>
+            <a href="{{ url_for('auth.logout') }}" class="btn btn-primary my-2">Logout</a>
+        </section>
+    </main>
 {% endblock %}
