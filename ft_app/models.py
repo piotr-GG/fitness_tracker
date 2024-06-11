@@ -18,6 +18,7 @@ class User(Base):
 
     blog_posts = relationship("BlogPost", back_populates="user")
     bw_records = relationship("BodyWeightRecord", back_populates="user")
+    training_plans = relationship("TrainingPlan", back_populates="user")
 
     def __init__(self, username, password, email, is_moderator=False):
         form = RegistrationForm(username=username, email=email, password=password, confirm_pass=password)
@@ -88,10 +89,14 @@ class TrainingPlan(Base):
     __tablename__ = "training_plans"
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    units = relationship("TrainingPlanUnit", back_populates="plan", cascade="all, delete-orphan")
+    user_id = Column(Integer, ForeignKey(f"{User.__tablename__}.id"), nullable=False)
 
-    def __init__(self, name):
+    units = relationship("TrainingPlanUnit", back_populates="plan", cascade="all, delete-orphan")
+    user = relationship("User", back_populates="training_plans")
+
+    def __init__(self, name, user_id):
         self.name = name
+        self.user_id = user_id
 
     def __repr__(self):
         return f'<Training Plan {self.name!r}>'
@@ -104,6 +109,7 @@ class TrainingPlanUnit(Base):
     date = Column(Date, nullable=False)
     plan_id = Column(Integer, ForeignKey(f"{TrainingPlan.__tablename__}.id"))
     plan = relationship("TrainingPlan", back_populates="units")
+    exercise_records = relationship("ExerciseRecord", back_populates="training_plan_unit")
 
     def __init__(self, name, date, plan_id):
         self.name = name
@@ -113,19 +119,21 @@ class TrainingPlanUnit(Base):
     def __repr__(self):
         return f'<Training Plan Unit {self.name!r}>'
 
+
 class ExerciseRecord(Base):
     __tablename__ = "exercise_records"
     id = Column(Integer, primary_key=True)
     exercise_id = Column(Integer, ForeignKey(f"{Exercise.__tablename__}.id"))
     sets = Column(Integer, nullable=False)
     repetitions = Column(Integer, nullable=False)
-    unit_id = Column(Integer, ForeignKey(f"{TrainingPlanUnit.__tablename__}.id"), nullable=False)
+    training_plan_unit_id = Column(Integer, ForeignKey(f"{TrainingPlanUnit.__tablename__}.id"), nullable=False)
+    training_plan_unit = relationship("TrainingPlanUnit", back_populates="exercise_records")
 
-    def __init__(self, exercise_id, sets, repetitions, unit_id):
+    def __init__(self, exercise_id, sets, repetitions, training_plan_unit_id):
         self.exercise_id = exercise_id
         self.sets = sets
         self.repetitions = repetitions
-        self.unit_id = unit_id
+        self.training_plan_unit_id = training_plan_unit_id
 
     def __repr__(self):
-        return f'<Exercise Record {self.exercise_id!r},{self.sets!r},{self.repetitions!r},{self.unit_id!r}>'
+        return f'<Exercise Record {self.exercise_id!r},{self.sets!r},{self.repetitions!r},{self.training_plan_unit_id!r}>'

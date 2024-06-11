@@ -182,19 +182,44 @@ def populate_dbc():
                                             "benefit of developing your core muscles as well.",
                                 image_path="lunge.jpg"))
 
-        test_tp = TrainingPlan(name="My training plan")
-        db_session.add(test_tp)
-        db_session.commit()
+        db_session.add(TrainingPlan(name="My training plan",
+                                    user_id=1))
 
-        test_tp_unit = TrainingPlanUnit(name="Monday",
+        db_session.add(TrainingPlanUnit(name="Monday",
                                         date=datetime.datetime.strptime("2024-06-03", "%Y-%m-%d"),
-                                        plan_id=test_tp.id)
-        db_session.add(test_tp_unit)
-        db_session.commit()
+                                        plan_id=1))
 
-        test_ex_r = ExerciseRecord(exercise_id=1,
-                                   sets=3,
-                                   repetitions=10,
-                                   unit_id=test_tp_unit.id)
-        db_session.add(test_ex_r)
+        db_session.add(TrainingPlanUnit(name="Wednesday",
+                                        date=datetime.datetime.strptime("2024-06-05", "%Y-%m-%d"),
+                                        plan_id=1))
+
+        db_session.add(ExerciseRecord(exercise_id=1,
+                                      sets=3,
+                                      repetitions=10,
+                                      training_plan_unit_id=1))
+
+        db_session.add(ExerciseRecord(exercise_id=2,
+                                      sets=3,
+                                      repetitions=10,
+                                      training_plan_unit_id=1))
+
+        db_session.add(ExerciseRecord(exercise_id=3,
+                                      sets=2,
+                                      repetitions=8,
+                                      training_plan_unit_id=1))
+
+        db_session.add(ExerciseRecord(exercise_id=7,
+                                      sets=5,
+                                      repetitions=14,
+                                      training_plan_unit_id=1))
+
+        db_session.add(ExerciseRecord(exercise_id=2,
+                                      sets=2,
+                                      repetitions=8,
+                                      training_plan_unit_id=2))
+
+        db_session.add(ExerciseRecord(exercise_id=4,
+                                      sets=5,
+                                      repetitions=14,
+                                      training_plan_unit_id=2))
         db_session.commit()
