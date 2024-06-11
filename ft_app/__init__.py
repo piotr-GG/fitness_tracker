@@ -4,7 +4,7 @@ import random
 
 from flask import Flask, render_template
 from ft_app.dbc.database import DBC
-from ft_app.models import Exercise
+from ft_app.models import Exercise, TrainingPlan, TrainingPlanUnit, ExerciseRecord
 
 
 def create_app(test_config=None):
@@ -182,4 +182,19 @@ def populate_dbc():
                                             "benefit of developing your core muscles as well.",
                                 image_path="lunge.jpg"))
 
+        test_tp = TrainingPlan(name="My training plan")
+        db_session.add(test_tp)
+        db_session.commit()
+
+        test_tp_unit = TrainingPlanUnit(name="Monday",
+                                        date=datetime.datetime.strptime("2024-06-03", "%Y-%m-%d"),
+                                        plan_id=test_tp.id)
+        db_session.add(test_tp_unit)
+        db_session.commit()
+
+        test_ex_r = ExerciseRecord(exercise_id=1,
+                                   sets=3,
+                                   repetitions=10,
+                                   unit_id=test_tp_unit.id)
+        db_session.add(test_ex_r)
         db_session.commit()

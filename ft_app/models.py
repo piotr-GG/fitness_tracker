@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, String, DateTime, Float, Text, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, DateTime, Float, Text, ForeignKey, Boolean, Date
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash
 
@@ -82,3 +82,50 @@ class Exercise(Base):
         self.name = name
         self.description = description
         self.image_path = image_path
+
+
+class TrainingPlan(Base):
+    __tablename__ = "training_plans"
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    units = relationship("TrainingPlanUnit", back_populates="plan", cascade="all, delete-orphan")
+
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return f'<Training Plan {self.name!r}>'
+
+
+class TrainingPlanUnit(Base):
+    __tablename__ = 'training_plan_units'
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    date = Column(Date, nullable=False)
+    plan_id = Column(Integer, ForeignKey(f"{TrainingPlan.__tablename__}.id"))
+    plan = relationship("TrainingPlan", back_populates="units")
+
+    def __init__(self, name, date, plan_id):
+        self.name = name
+        self.date = date
+        self.plan_id = plan_id
+
+    def __repr__(self):
+        return f'<Training Plan Unit {self.name!r}>'
+
+class ExerciseRecord(Base):
+    __tablename__ = "exercise_records"
+    id = Column(Integer, primary_key=True)
+    exercise_id = Column(Integer, ForeignKey(f"{Exercise.__tablename__}.id"))
+    sets = Column(Integer, nullable=False)
+    repetitions = Column(Integer, nullable=False)
+    unit_id = Column(Integer, ForeignKey(f"{TrainingPlanUnit.__tablename__}.id"), nullable=False)
+
+    def __init__(self, exercise_id, sets, repetitions, unit_id):
+        self.exercise_id = exercise_id
+        self.sets = sets
+        self.repetitions = repetitions
+        self.unit_id = unit_id
+
+    def __repr__(self):
+        return f'<Exercise Record {self.exercise_id!r},{self.sets!r},{self.repetitions!r},{self.unit_id!r}>'
