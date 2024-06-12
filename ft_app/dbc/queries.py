@@ -69,3 +69,11 @@ def get_training_plan_for_user(user_id):
     return db_session.scalars(
         select(TrainingPlan)
         .where(TrainingPlan.user_id == user_id)).one()
+
+
+def get_training_plan_unit_by_id(tp_id):
+    db_session = DBC.get_db_session()
+    return db_session.scalars(
+        select(TrainingPlanUnit)
+        .where(TrainingPlanUnit.training_plan_id == tp_id)
+    ).one()
