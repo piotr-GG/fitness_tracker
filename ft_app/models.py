@@ -79,6 +79,8 @@ class Exercise(Base):
     description = Column(Text)
     image_path = Column(String(200), default=None, nullable=True)
 
+    exercise_records = relationship("ExerciseRecord", back_populates="exercise")
+
     def __init__(self, name, description, image_path):
         self.name = name
         self.description = description
@@ -127,6 +129,8 @@ class ExerciseRecord(Base):
     sets = Column(Integer, nullable=False)
     repetitions = Column(Integer, nullable=False)
     training_plan_unit_id = Column(Integer, ForeignKey(f"{TrainingPlanUnit.__tablename__}.id"), nullable=False)
+
+    exercise = relationship("Exercise", back_populates="exercise_records")
     training_plan_unit = relationship("TrainingPlanUnit", back_populates="exercise_records")
 
     def __init__(self, exercise_id, sets, repetitions, training_plan_unit_id):

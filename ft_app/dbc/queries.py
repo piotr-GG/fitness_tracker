@@ -66,4 +66,6 @@ def get_exercises(exercise_name=""):
 
 def get_training_plan_for_user(user_id):
     db_session = DBC.get_db_session()
-    return db_session.scalars(select(TrainingPlanUnit).where(TrainingPlan.user_id == user_id)).all()
+    return db_session.scalars(
+        select(TrainingPlan)
+        .where(TrainingPlan.user_id == user_id)).one()

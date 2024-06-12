@@ -2,10 +2,34 @@
 
 {% block head %}
 <title>Training Planner</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom/training_planner.css') }}">
 {% endblock %}
 
 {% block body %}
 <div class="content">
-    <h1>Welcome to Training Planner!</h1>
+    {% if training_plan %}
+        <h2>{{ training_plan.name }}</h2>
+        <h3>Units</h3>
+        <ul>
+            {% for training_plan_unit in training_plan.units %}
+                <li>{{ training_plan_unit.name }} on {{ training_plan_unit.date }}
+                {% if training_plan_unit.exercise_records|length > 0 %}
+                    <ul>
+                    {% for exercise_record in training_plan_unit.exercise_records %}
+                        <li>{{ exercise_record.exercise.name }} - {{ exercise_record.sets }} x {{ exercise_record.repetitions }}</li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <li>No exercises recorded</li>
+                {% endif %}
+                </li>
+            <a class="btn-user" href="/training_planner/modify/{{training_plan_unit.id}}">Modify unit</a>
+            {% endfor %}
+        </ul>
+     <a class="btn" href="{{ url_for('training_planner.create_unit') }}">Create new unit</a>
+    {% else %}
+    <h2>There are no training plans. Please add some!</h2>
+    <a class="btn" href="{{ url_for('training_planner.create') }}">Create new plan</a>
+    {% endif %}
 </div>
 {% endblock %}
