@@ -23,7 +23,7 @@
                     <li>No exercises recorded</li>
                 {% endif %}
                 </li>
-            <a class="btn-user" href="/training_planner/modify/{{training_plan_unit.id}}">Modify unit</a>
+            <a class="btn-user" href="{{ url_for('training_planner.modify', tp_unit_id=training_plan_unit.id) }}">Modify unit</a>
             {% endfor %}
         </ul>
      <a class="btn" href="{{ url_for('training_planner.create_unit') }}">Create new unit</a>

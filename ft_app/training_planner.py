@@ -36,6 +36,5 @@ def create_unit():
 @login_required
 @bp.route('/modify/<int:tp_unit_id>', methods=["POST", "GET"])
 def modify(tp_unit_id):
-    training_plan_unit = get_training_plan_unit_by_id(tp_unit_id)
-    return render_template("training_planner/modify.html",
-                           test_plan=training_plan_unit)
+    # training_plan_unit = get_training_plan_unit_by_id(tp_unit_id)
+    return render_template("training_planner/modify.html")
