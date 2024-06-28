@@ -1,0 +1,33 @@
+{%extends 'base.html' %}
+
+{% block head %}
+<title>Modify training unit</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom/training_planner.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    {% if form.exercises %}
+        <table>
+             <tr>
+                <th>Name</th>
+                <th>Sets</th>
+                <th>Repetitions</th>
+             </tr>
+             <form method="post">
+             {% for exercise_form in form.exercises %}
+                    <tr>
+                        <td><div>{{ exercise_form.name() }}</div></td>
+                        <td><div>{{ exercise_form.sets() }}</div></td>
+                        <td><div>{{ exercise_form.reps() }}</div></td>
+                        <td>
+                    </tr>
+             {% endfor %}
+             </form>
+             {{ form.submit() }}
+          </table>
+    {% else %}
+    <h2>No training unit!</h2>
+    {% endif %}
+</div>
+{% endblock %}
