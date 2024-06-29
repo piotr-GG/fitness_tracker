@@ -75,5 +75,5 @@ def get_training_plan_unit_by_id(tp_id):
     db_session = DBC.get_db_session()
     return db_session.scalars(
         select(TrainingPlanUnit)
-        .where(TrainingPlanUnit.training_plan_id == tp_id)
+        .where(TrainingPlanUnit.id == tp_id)
     ).one()

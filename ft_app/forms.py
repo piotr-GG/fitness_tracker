@@ -3,7 +3,10 @@ from datetime import date
 
 from wtforms import Form, StringField, PasswordField, validators, TextAreaField
 from wtforms.fields.datetime import DateField
+from wtforms.fields.form import FormField
+from wtforms.fields.list import FieldList
 from wtforms.fields.numeric import DecimalField
+from wtforms.fields.simple import SubmitField, HiddenField
 from wtforms.validators import StopValidation
 
 
@@ -72,3 +75,18 @@ class BodyWeightRecordForm(FormErrorPrinter):
                                  validate_date_not_in_future])
     weight = DecimalField('Weight',
                           validators=[validators.DataRequired(), validate_bw_record])
+
+
+class ExerciseRecordForm(FormErrorPrinter):
+    ex_id = HiddenField('EX_id')
+    name = StringField('Name',
+                       validators=[],
+                       render_kw={"disabled": "disabled"})
+    sets = StringField('Sets', validators=[])
+    reps = StringField('Reps', validators=[])
+
+
+class ExerciseMainForm(FormErrorPrinter):
+    exercises = FieldList(FormField(ExerciseRecordForm), min_entries=1)
+    submit = SubmitField("Submit")
+
