@@ -8,6 +8,7 @@ from wtforms.fields.list import FieldList
 from wtforms.fields.numeric import DecimalField
 from wtforms.fields.simple import SubmitField, HiddenField
 from wtforms.validators import StopValidation
+from flask_wtf import FlaskForm
 
 
 # TODO: Create new dir for forms only and separate custom validators into another Python module
@@ -78,15 +79,16 @@ class BodyWeightRecordForm(FormErrorPrinter):
 
 
 class ExerciseRecordForm(FormErrorPrinter):
-    ex_id = HiddenField('EX_id')
-    name = StringField('Name',
-                       validators=[],
-                       render_kw={"disabled": "disabled"})
-    sets = StringField('Sets', validators=[])
-    reps = StringField('Reps', validators=[])
+    ex_id = HiddenField('Exercise ID')
+    exercise_name = StringField('Exercise Name',
+                                validators=[validators.DataRequired()],
+                                render_kw={"readonly": "readonly"}
+                                )
+    sets = StringField('Sets', validators=[validators.DataRequired()])
+    reps = StringField('Reps', validators=[validators.DataRequired()])
 
 
-class ExerciseMainForm(FormErrorPrinter):
-    exercises = FieldList(FormField(ExerciseRecordForm), min_entries=1)
-    submit = SubmitField("Submit")
+class ExerciseMainForm(FlaskForm):
+    exercises = FieldList(FormField(ExerciseRecordForm))
+    submit = SubmitField("Save All")
 

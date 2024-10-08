@@ -38,30 +38,31 @@ def create_unit():
 @bp.route('/modify/<int:tp_unit_id>', methods=["POST", "GET"])
 def modify(tp_unit_id):
     training_plan_unit = get_training_plan_unit_by_id(tp_unit_id)
-    exercises_form_list = []
-    form = ExerciseMainForm(request.form)
+
+    form = ExerciseMainForm()
 
     if request.method == "POST":
+        form = ExerciseMainForm(request.form)
         if form.validate():
-            for i in request.form.items():
-                print(i)
+            for exercise_form in form.exercises:
+                exercise_id = exercise_form.ex_id.data
+                exercise_sets = exercise_form.sets.data
+                exercise_repetitions = exercise_form.reps.data
+                print(exercise_id, exercise_sets, exercise_repetitions)
         else:
             print(form.errors)
-        # print(request.form.items())
+
         return render_template("training_planner/create_modify.html",
                                form=None)
     else:
-        for exercise in training_plan_unit.exercise_records:
+        form = ExerciseMainForm(request.form)
+        for i, exercise in enumerate(training_plan_unit.exercise_records, start=1):
+
             ex_rec_form = ExerciseRecordForm()
-            ex_rec_form.ex_id.data = exercise.id
-            ex_rec_form.name.data = exercise.exercise.name
-            ex_rec_form.sets.data = exercise.sets
-            ex_rec_form.reps.data = exercise.repetitions
-
-            exercises_form_list.append(
-                ex_rec_form
-            )
-
-        form.exercises = exercises_form_list
+            ex_rec_form.ex_id.data = exercise.id  # Set the hidden ID field
+            ex_rec_form.exercise_name.data = exercise.exercise.name  # Assign exercise name to name field
+            ex_rec_form.sets.data = exercise.sets  # Assign sets value
+            ex_rec_form.reps.data = exercise.repetitions  # Assign repetitions value
+            form.exercises.append_entry(ex_rec_form)  # Append to the FieldList
         return render_template("training_planner/create_modify.html",
                                form=form)

@@ -10,27 +10,30 @@
 <div class="content" style="margin-top: 2rem; margin-bottom: 2rem;">
     <h3>Modify your training unit</h3>
     {% if form.exercises %}
-        <table>
-             <tr>
-                <th>Name</th>
-                <th>Sets</th>
-                <th>Repetitions</th>
-             </tr>
-             <form method="post">
-             {% for exercise_form in form.exercises %}
-                    <tr>
-                        {{ exercise_form.ex_id() }}
-                        <td><div>{{ exercise_form.name() }} </div></td>
-                        <td><div>{{ exercise_form.sets() }}</div></td>
-                        <td><div>{{ exercise_form.reps() }}</div></td>
-                    </tr>
-             {% endfor %}
-        </table>
-         <div style="margin-top: 1rem;">
-            {{ form.submit() }}
-         </div>
-    </form>
+    <form method="POST">
+        {{ form.hidden_tag() }}
 
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Exercise Name</th>
+                    <th>Sets</th>
+                    <th>Repetitions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exercise_form in form.exercises %}
+                <tr>
+                    <td>{{ exercise_form.exercise_name.data }}</td>
+                    <td>{{ exercise_form.sets.data }}</td>
+                    <td>{{ exercise_form.reps.data }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <input type="submit" value="Save All">
+    </form>
 
     {% else %}
     <h2>No training unit!</h2>
