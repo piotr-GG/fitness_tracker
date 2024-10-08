@@ -17,4 +17,11 @@ App will use following technologies:
 - **flasksqlalchemy / sqlalchemy** - for DBC ORM
 - **pytest** - for testing
 
+**How to run the APP on local PC:**
+
+Go into the fitness_tracker directory and run following command:
+
+``flask --app ft_app run --debug`**``
+
+
 
