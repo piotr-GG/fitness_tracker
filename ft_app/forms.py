@@ -81,7 +81,7 @@ class BodyWeightRecordForm(FormErrorPrinter):
 class ExerciseRecordForm(FormErrorPrinter):
     ex_id = HiddenField('Exercise ID')
     exercise_name = StringField('Exercise Name',
-                                validators=[validators.DataRequired()],
+                                validators=[],
                                 render_kw={"readonly": "readonly"}
                                 )
     sets = StringField('Sets', validators=[validators.DataRequired()])
@@ -91,4 +91,3 @@ class ExerciseRecordForm(FormErrorPrinter):
 class ExerciseMainForm(FlaskForm):
     exercises = FieldList(FormField(ExerciseRecordForm))
     submit = SubmitField("Save All")
-

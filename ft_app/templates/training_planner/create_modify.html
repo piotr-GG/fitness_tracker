@@ -24,9 +24,11 @@
             <tbody>
                 {% for exercise_form in form.exercises %}
                 <tr>
-                    <td>{{ exercise_form.exercise_name.data }}</td>
-                    <td>{{ exercise_form.sets.data }}</td>
-                    <td>{{ exercise_form.reps.data }}</td>
+                    {% set indx = loop.index %}
+                    {{ exercise_form.ex_id(value=data[indx][0]) }}
+                    <td>{{ exercise_form.exercise_name(value=data[indx][1]) }}</td>
+                    <td>{{ exercise_form.sets(value=data[indx][2]) }}</td>
+                    <td>{{ exercise_form.reps(value=data[indx][3]) }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

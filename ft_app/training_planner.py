@@ -42,27 +42,33 @@ def modify(tp_unit_id):
     form = ExerciseMainForm()
 
     if request.method == "POST":
+        print("INSIDE POST METHOD!")
         form = ExerciseMainForm(request.form)
         if form.validate():
-            for exercise_form in form.exercises:
+            print("FORM VALIDATED!")
+            data = {}
+            for i, exercise_form in enumerate(form.exercises, start=1):
                 exercise_id = exercise_form.ex_id.data
                 exercise_sets = exercise_form.sets.data
+                exercise_name = exercise_form.exercise_name.data
                 exercise_repetitions = exercise_form.reps.data
+                data[i] = (exercise_id, exercise_name, exercise_sets, exercise_repetitions)
                 print(exercise_id, exercise_sets, exercise_repetitions)
         else:
+            print("FORM VALIDATION FAILED!")
             print(form.errors)
 
         return render_template("training_planner/create_modify.html",
-                               form=None)
+                               form=form, data=data)
     else:
-        form = ExerciseMainForm(request.form)
+        data = {}
         for i, exercise in enumerate(training_plan_unit.exercise_records, start=1):
-
             ex_rec_form = ExerciseRecordForm()
-            ex_rec_form.ex_id.data = exercise.id  # Set the hidden ID field
-            ex_rec_form.exercise_name.data = exercise.exercise.name  # Assign exercise name to name field
-            ex_rec_form.sets.data = exercise.sets  # Assign sets value
-            ex_rec_form.reps.data = exercise.repetitions  # Assign repetitions value
-            form.exercises.append_entry(ex_rec_form)  # Append to the FieldList
+            ex_rec_form.ex_id.data = exercise.id
+            ex_rec_form.exercise_name.data = exercise.exercise.name
+            ex_rec_form.sets.data = exercise.sets
+            ex_rec_form.reps.data = exercise.repetitions
+            data[i] = (exercise.id, exercise.exercise.name, exercise.sets, exercise.repetitions)
+            form.exercises.append_entry(ex_rec_form)
         return render_template("training_planner/create_modify.html",
-                               form=form)
+                               form=form, data=data)
