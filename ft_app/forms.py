@@ -88,6 +88,6 @@ class ExerciseRecordForm(FormErrorPrinter):
     reps = StringField('Reps', validators=[validators.DataRequired()])
 
 
-class ExerciseMainForm(FlaskForm):
+class ExerciseMainForm(FlaskForm, FormErrorPrinter):
     exercises = FieldList(FormField(ExerciseRecordForm))
     submit = SubmitField("Save All")
